@@ -1,0 +1,20 @@
+{
+  "name": "devcamp",
+  "version": "1.0.0",
+  "description": "devBootcamp API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m7moudGadallah/devBootcampAPI.git"
+  },
+  "author": "Mahmoud Gadallah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m7moudGadallah/devBootcampAPI/issues"
+  },
+  "homepage": "https://github.com/m7moudGadallah/devBootcampAPI#readme"
+}
