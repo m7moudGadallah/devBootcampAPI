@@ -4,10 +4,10 @@ const routes = require('./routes');
 
 const app = express();
 
-// middelwares
+// mount middelwares
 middlewares(app);
 
-// routes
+// mount routes
 routes(app);
 
 module.exports = app;
