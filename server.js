@@ -1,8 +1,9 @@
 const http = require('http');
+const { parse } = require('path');
 
 const PORT = 5000;
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
     const { headers, url, method } = req;
     console.log({ headers, url, method });
 
@@ -16,19 +17,35 @@ const server = http.createServer((req, res) => {
 
     // res.setHeader('Content-Type', 'application/json');
 
+    /* parse data from request body */
+    const parseBody = async () => {
+        let body = [];
+
+        await req
+            .on('data', (chunk) => {
+                body.push(chunk);
+            })
+            .on('end', () => {
+                body = Buffer.concat(body);
+            });
+
+        return body.toString();
+    };
+
+    const body = await parseBody();
+    console.log(body);
+
     res.writeHead(200, {
         'Content-Type': 'application/json',
         'X-Powered-By': 'Node.js',
     });
-    
+
     res.end(
         JSON.stringify({
             success: true,
             data: 'hello :)',
         })
     );
-
-    res.end();
 });
 
 server.listen(PORT, () => {
