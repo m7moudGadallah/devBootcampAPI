@@ -41,11 +41,9 @@ const BootcampSchema = new mongooes.Schema({
         type: {
             type: String,
             enum: ['Point'], // location must be a point
-            // required: true,
         },
         coordinates: {
             type: [Number],
-            // required: true,
             index: '2dsphere',
         },
         formattedAddress: String,

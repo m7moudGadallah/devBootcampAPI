@@ -60,7 +60,6 @@ const factory = function ({ model, docName = 'doc' }) {
     const getOne = ({ populates = [] }) =>
         catchAsync(async (req, res, next) => {
             const doc = await model.findById(req.params.id);
-            console.log(doc);
 
             populates.forEach((item) => doc.populate(item));
 

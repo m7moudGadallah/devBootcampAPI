@@ -1,40 +1,29 @@
-const morgan = require('morgan');
-const { json } = require('express');
-
-const { NODE_ENV: MODE } = process.env;
+const devLogger = require('./devLogger');
+const parser = require('./parser');
+const error = require('./error');
 
 module.exports = (app) => {
     return {
         /**
-         * Middlewares
-         * @middleware Development logging
-         * @middleware body-parser
+         * Middlewares before routes
+         * @middleware devLogger => Development logging
+         * @middleware parser => body-parser
          */
         pre() {
             // Development logging
-            if (MODE === 'development') {
-                app.use(morgan('dev'));
-            }
+            devLogger(app);
 
-            // body-parser middleware => rendering data from req.body
-            app.use(json());
+            // body-parser middleware
+            parser(app);
         },
 
         /**
-         * Middlewares
-         * @middleware global error
+         * Middlewares after routes
+         * @middleware error => [undefinedRoutes, globalMiddleware]
          */
         post() {
-            // global error
-            app.use((err, req, res, next) => {
-                console.log(`${err.message}`.brightRed.bold);
-                res.status(err.statusCode || 500).json({
-                    success: false,
-                    error: err,
-                    message: err.message,
-                    stack: err.stack,
-                });
-            });
+            // handles [undefinedRoutes, globalErrors]
+            error(app);
         },
     };
 };
