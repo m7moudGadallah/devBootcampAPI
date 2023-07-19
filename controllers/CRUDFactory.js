@@ -42,14 +42,14 @@ const factory = function ({ model, docName = 'doc' }) {
                 .select(selectedFields)
                 .paginate(page, limit).query;
 
-            const data = {};
-            const docsName = `${docName}s`;
-            data[docsName] = docs;
+            // const data = {};
+            // const docsName = `${docName}s`;
+            // data[docsName] = docs;
 
             sendSuccessResponse.JSON({
                 response: res,
-                results: docs.length,
-                data,
+                count: docs.length,
+                data: docs,
             });
         });
 
@@ -81,12 +81,12 @@ const factory = function ({ model, docName = 'doc' }) {
 
             doc.__v = undefined;
 
-            const data = {};
-            data[docName] = doc;
+            // const data = {};
+            // data[docName] = doc;
 
             sendSuccessResponse.JSON({
                 response: res,
-                data,
+                data: doc,
             });
         });
 
@@ -101,13 +101,13 @@ const factory = function ({ model, docName = 'doc' }) {
 
             newDoc.__v = undefined;
 
-            data = {};
-            data[docName] = newDoc;
+            // data = {};
+            // data[docName] = newDoc;
 
             sendSuccessResponse.JSON({
                 response: res,
                 statusCode: 201,
-                data,
+                data: newDoc,
             });
         });
 
@@ -137,12 +137,12 @@ const factory = function ({ model, docName = 'doc' }) {
 
             newDoc.__v = undefined;
 
-            const data = {};
-            data[docName] = newDoc;
+            // const data = {};
+            // data[docName] = newDoc;
 
             sendSuccessResponse.JSON({
                 response: res,
-                data,
+                data: newDoc,
             });
         });
 
