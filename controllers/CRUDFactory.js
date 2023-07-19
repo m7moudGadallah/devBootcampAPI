@@ -108,8 +108,8 @@ const factory = function ({ model, docName = 'doc' }) {
      */
     const updateOne = () =>
         catchAsync(async (req, res, next) => {
-            const newDoc = await model.findByIdAndUpdate(
-                req.params.id,
+            const newDoc = await model.findOneAndUpdate(
+                {_id: req.params.id},
                 req.body,
                 {
                     new: true,

@@ -1,5 +1,6 @@
 const mongooes = require('mongoose');
 const validator = require('validator');
+const slugify = require('slugify');
 
 const BootcampSchema = new mongooes.Schema({
     name: {
@@ -97,6 +98,25 @@ const BootcampSchema = new mongooes.Schema({
         type: Date,
         default: Date.now(),
     },
+});
+
+// create bootcamp slug from name
+BootcampSchema.pre('save', function (next) {
+    // this points to query document
+    this.slug = slugify(this.name, { lower: true });
+    next();
+});
+
+// update bootcamp slug when name is updated
+BootcampSchema.pre('findOneAndUpdate', function (next) {
+    // this points to query object, not the document
+    const updateFields = this.getUpdate();
+
+    if (updateFields.name) {
+        updateFields.slug = slugify(updateFields.name, { lower: true });
+    }
+
+    next();
 });
 
 const Bootcamp = mongooes.model('Bootcamp', BootcampSchema);
