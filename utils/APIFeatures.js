@@ -44,12 +44,39 @@ class APIFeatures {
             let queryObj = { ...this.#reqQuery };
             this.excludedFields.forEach((field) => delete queryObj[field]);
 
-            // match (gte|gt|lte|lt)
+            // Match (gt|gte|lt|lte|eq|ne|in|nin)
             const queryStr = JSON.stringify(queryObj).replace(
-                /\b(gt|gte|lt|lte|eq|ne)\b/g,
+                /\b(gt|gte|lt|lte|eq|ne|in|nin)\b/g,
                 (match) => `$${match}`
             );
+
+            // Parse the modified query string
             queryObj = JSON.parse(queryStr);
+
+            console.log({ pre: queryObj });
+
+            // Convert in and nin values to arrays
+            if (queryObj.in) {
+                console.log({ in: queryObj.in });
+                queryObj.in = queryObj.in.split(', ');
+            }
+
+            // Convert in and nin values to arrays
+            const convertValuesToArray = (subKey) => {
+                Object.keys(queryObj).forEach((key) => {
+                    console.log(queryObj[key]);
+                    if (queryObj[key][subKey]) {
+                        queryObj[key][subKey] =
+                            queryObj[key][subKey].split(',');
+                    }
+                });
+            };
+
+            // Convert in values to arrays
+            convertValuesToArray('$in');
+
+            // Convert in values to arrays
+            convertValuesToArray('$nin');
 
             this.#resQuery = this.#resQuery.find(queryObj);
 
