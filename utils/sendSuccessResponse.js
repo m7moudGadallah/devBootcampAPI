@@ -4,7 +4,7 @@
  * @param {object} options - The options for the JSON response.
  * @param {object} options.response - The response object.
  * @param {number} [options.statusCode=200] - The status code for the response.
- * @param {any} [options.data] - The data to be included in the response.
+ * @param {object} [options.data] - The data to be included in the response.
  * @param {string} [options.message] - The message to be included in the response.
  * @example
     const options = {
