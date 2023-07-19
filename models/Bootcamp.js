@@ -28,6 +28,10 @@ const BootcampSchema = new mongooes.Schema({
         // validate it's a correct email format
         validate: [validator.isEmail, 'Please provide a valid email'],
     },
+    phone: {
+        type: String,
+        validate: [validator.isMobilePhone, 'Please provide a valid phone'],
+    },
     address: {
         type: String,
         required: [true, 'Bootcamp should have an address'],
@@ -37,11 +41,11 @@ const BootcampSchema = new mongooes.Schema({
         type: {
             type: String,
             enum: ['Point'], // location must be a point
-            required: true,
+            // required: true,
         },
         coordinates: {
             type: [Number],
-            required: true,
+            // required: true,
             index: '2dsphere',
         },
         formattedAddress: String,
