@@ -14,9 +14,6 @@ const {
  * @returns {object} - The controller methods object.
  */
 const factory = function ({ model, docName = 'doc' }) {
-    // error used when id isn't passed on req.params
-    const idError = new AppError(`Please provide ${docName} id`, 400);
-
     /**
      * Get all documents from the specified model with advanced querying options.
      * @function getAll
@@ -62,13 +59,7 @@ const factory = function ({ model, docName = 'doc' }) {
      */
     const getOne = ({ populates = [] }) =>
         catchAsync(async (req, res, next) => {
-            const { id } = req.params;
-
-            if (!id) {
-                return next(idError);
-            }
-
-            const doc = await model.findById(id);
+            const doc = await model.findById(req.params.id);
             console.log(doc);
 
             populates.forEach((item) => doc.populate(item));
@@ -118,16 +109,14 @@ const factory = function ({ model, docName = 'doc' }) {
      */
     const updateOne = () =>
         catchAsync(async (req, res, next) => {
-            const { id } = req.params;
-
-            if (!id) {
-                return next(idError);
-            }
-
-            const newDoc = await model.findByIdAndUpdate(id, req.body, {
-                new: true,
-                runValidators: true,
-            });
+            const newDoc = await model.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            );
 
             if (!newDoc) {
                 return next(
@@ -153,13 +142,7 @@ const factory = function ({ model, docName = 'doc' }) {
      */
     const deleteOne = () =>
         catchAsync(async (req, res, next) => {
-            const { id } = req.params;
-
-            if (!id) {
-                return next(idError);
-            }
-
-            const doc = await model.findByIdAndDelete(id);
+            const doc = await model.findByIdAndDelete(req.params.id);
 
             if (!doc) {
                 return next(
