@@ -20,7 +20,7 @@ class APIFeatures {
         this.#reqQuery = reqQuery;
         this.excludedFields = excludedFields.length
             ? excludedFields
-            : ['page', 'sort', 'limit', 'fields'];
+            : ['page', 'sort', 'limit', 'fields', 'select'];
         this.#resQuery = model;
     }
 
@@ -108,7 +108,7 @@ class APIFeatures {
      */
     select(fields = '') {
         try {
-            if (this.#reqQuery.fields || fields) {
+            if (this.#reqQuery.fields || this.#reqQuery.select || fields) {
                 const _fields = (this.#reqQuery.fields || fields)
                     .split(',')
                     .join(' ');
