@@ -1,14 +1,15 @@
 const router = require('express').Router();
-const { unImplementedController } = require('../controllers');
+const { bootcampController } = require('../controllers');
 /**
  * @route GET /api/v1/bootcamps
  * @desc get all bootcamps
  * @access public
  */
 router.route('/').get(
-    unImplementedController.unImplementedYet({
-        message: 'Get all Bootcamps, undefined yet',
-    })
+    // unImplementedController.unImplementedYet({
+    //     message: 'Get all Bootcamps, undefined yet',
+    // })
+    bootcampController.getAllBootcamps
 );
 
 /**
@@ -16,11 +17,7 @@ router.route('/').get(
  * @desc get a bootcamp by id
  * @access public
  */
-router.route('/:id').get(
-    unImplementedController.unImplementedYet({
-        message: 'Get a Bootcamp, undefined yet',
-    })
-);
+router.route('/:id').get(bootcampController.getBootcamp);
 
 /**
  * @route POST /api/v1/bootcamps
@@ -28,12 +25,7 @@ router.route('/:id').get(
  * @access private
  * @auth ['admin']
  */
-router.route('/').post(
-    unImplementedController.unImplementedYet({
-        statusCode: 201,
-        message: 'Create a Bootcamp, undefined yet',
-    })
-);
+router.route('/').post(bootcampController.createBootcamp);
 
 /**
  * @route PATCH /api/v1/bootcamps/:id
@@ -41,11 +33,7 @@ router.route('/').post(
  * @access private
  * @auth ['admin']
  */
-router.route('/:id').patch(
-    unImplementedController.unImplementedYet({
-        message: 'Update a Bootcamp, undefined yet',
-    })
-);
+router.route('/:id').patch(bootcampController.updateBootcamp);
 
 /**
  * @route DELETE /api/v1/bootcamps/:id
@@ -53,10 +41,6 @@ router.route('/:id').patch(
  * @access private
  * @auth ['admin']
  */
-router.route('/:id').delete(
-    unImplementedController.unImplementedYet({
-        message: 'Delete a Bootcamp, undefined yet',
-    })
-);
+router.route('/:id').delete(bootcampController.deleteBootcamp);
 
 module.exports = router;
