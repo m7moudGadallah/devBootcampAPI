@@ -53,18 +53,9 @@ class APIFeatures {
             // Parse the modified query string
             queryObj = JSON.parse(queryStr);
 
-            console.log({ pre: queryObj });
-
-            // Convert in and nin values to arrays
-            if (queryObj.in) {
-                console.log({ in: queryObj.in });
-                queryObj.in = queryObj.in.split(', ');
-            }
-
             // Convert in and nin values to arrays
             const convertValuesToArray = (subKey) => {
                 Object.keys(queryObj).forEach((key) => {
-                    console.log(queryObj[key]);
                     if (queryObj[key][subKey]) {
                         queryObj[key][subKey] =
                             queryObj[key][subKey].split(',');
