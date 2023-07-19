@@ -1,13 +1,23 @@
 const mongoose = require('mongoose');
 
 /**
- * Connects to a MongoDB database using the provided credentials.
- *
- * @param {object} options - The options for connecting to the database.
- * @param {string} options.DATABASE - The MongoDB URI string for the database.
- * @param {string} options.DATABASE_PASSWORD - The password for the database.
- * @returns {void}
- */
+ * Connects to the database using the provided credentials.
+ * @function connectDB
+ * @param {object} credentials - The credentials for connecting to the database.
+ * @param {string} credentials.DATABASE - The database URI.
+ * @param {string} credentials.DATABASE_PASSWORD - The password for the database URI.
+ * @example
+
+    const credentials = {
+
+    DATABASE: 'mongodb://localhost/mydatabase',
+
+    DATABASE_PASSWORD: 'password123'
+
+    };
+
+    connectDB(credentials);
+*/
 const connectDB = ({ DATABASE, DATABASE_PASSWORD }) => {
     // 1) set password on uri
     const DB = DATABASE.replace('<password>', DATABASE_PASSWORD);
