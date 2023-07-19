@@ -30,7 +30,7 @@ const BootcampSchema = new mongooes.Schema({
     },
     phone: {
         type: String,
-        validate: [validator.isMobilePhone, 'Please provide a valid phone'],
+        // validate: [validator.isMobilePhone, 'Please provide a valid phone'],
     },
     address: {
         type: String,
