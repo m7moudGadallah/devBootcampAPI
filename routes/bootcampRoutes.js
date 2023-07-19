@@ -43,4 +43,14 @@ router.route('/:id').patch(bootcampController.updateBootcamp);
  */
 router.route('/:id').delete(bootcampController.deleteBootcamp);
 
+/**
+ * @route GET /api/v1/bootcamps/radius/:zipcode/:distance/:unit
+ * @desc Get bootcamps within a radius
+ * @access private
+ * @auth all
+ */
+router
+    .route('/radius/:zipcode/:distance/:unit')
+    .get(bootcampController.getBootcampsWithinRadius);
+
 module.exports = router;
