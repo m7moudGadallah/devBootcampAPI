@@ -123,13 +123,13 @@ BootcampSchema.pre('findOneAndUpdate', function (next) {
 // create Geocode location field
 BootcampSchema.pre('save', async function (next) {
     // this points to query document
-    const loc = await geocoder.geocoder(this.address);
+    const loc = await geocoder.geocode(this.address);
 
     const {
         latitude,
         longitude,
-        country,
-        countryCode: state,
+        countryCode: country,
+        stateCode: state,
         city,
         zipcode,
         streetName: street,

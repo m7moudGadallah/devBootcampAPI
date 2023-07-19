@@ -1,4 +1,4 @@
-const nodeGeocoder = require('node-node-geocoder');
+const nodeGeocoder = require('node-geocoder');
 
 // env variables
 const { GEOCODER_PROVIDER: provider, GEOCODER_API_KEY: apiKey } = process.env;
