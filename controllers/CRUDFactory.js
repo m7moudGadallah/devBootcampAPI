@@ -15,7 +15,7 @@ const {
  */
 const factory = function ({ model, docName = 'doc' }) {
     // error used when id isn't passed on req.params
-    const idError = new AppError(`Please provide ${docName} id`, 404);
+    const idError = new AppError(`Please provide ${docName} id`, 400);
 
     /**
      * Get all documents from the specified model with advanced querying options.
@@ -131,7 +131,7 @@ const factory = function ({ model, docName = 'doc' }) {
 
             if (!newDoc) {
                 return next(
-                    new AppError(`No ${docName} found with that ID', 404`)
+                    new AppError(`No ${docName} found with that ID`, 404)
                 );
             }
 
