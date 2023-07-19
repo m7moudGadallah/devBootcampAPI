@@ -6,7 +6,7 @@ const factory = CRUDFactory({ model: Bootcamp, docName: 'bootcamp' });
 /**
  * Get all bootcamps from the database and send a success response with the bootcamps data.
  */
-const getAllBootcamps = factory.getAll({});
+const getAllBootcamps = factory.getAll({ sortByFields: '-createdAt' });
 
 /**
  * Get a single bootcamp by ID from the database and send a success response with the bootcamp data.
