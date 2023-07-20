@@ -18,7 +18,14 @@ const getAllCourses = factory.getAll({ sortByFields: '-createdAt' });
 /**
  * Get a single course by ID from the database and send a success response with the course data.
  */
-const getCourse = factory.getOne({});
+const getCourse = factory.getOne({
+    populates: [
+        {
+            path: 'bootcamp',
+            select: 'name description',
+        },
+    ],
+});
 
 /**
  * Create a new course and send a success response with the created course data.

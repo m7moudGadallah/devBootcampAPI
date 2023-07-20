@@ -121,9 +121,9 @@ class APIFeatures {
                     .split(',')
                     .join(' ');
                 this.#resQuery = this.#resQuery.select(_fields);
-            } else {
-                this.#resQuery = this.#resQuery.select('-__v');
             }
+
+            this.#resQuery = this.#resQuery.select('-__v');
 
             return this;
         } catch (err) {

@@ -8,13 +8,25 @@ const factory = CRUDFactory({ model: Bootcamp, docName: 'bootcamp' });
  */
 const getAllBootcamps = factory.getAll({
     sortByFields: '-createdAt',
-    populates: ['courses'],
+    populates: [
+        {
+            path: 'courses',
+            select: '-__v',
+        },
+    ],
 });
 
 /**
  * Get a single bootcamp by ID from the database and send a success response with the bootcamp data.
  */
-const getBootcamp = factory.getOne({ populates: ['courses'] });
+const getBootcamp = factory.getOne({
+    populates: [
+        {
+            path: 'courses',
+            select: '-__v',
+        },
+    ],
+});
 
 /**
  * Create a new bootcamp and send a success response with the created bootcamp data.

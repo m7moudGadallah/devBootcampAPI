@@ -82,6 +82,8 @@ const factory = function ({ model, docName = 'doc' }) {
                 );
             }
 
+            doc.__v = undefined;
+
             sendSuccessResponse.JSON({
                 response: res,
                 data: doc,
@@ -127,6 +129,8 @@ const factory = function ({ model, docName = 'doc' }) {
                     new AppError(`No ${docName} found with that ID`, 404)
                 );
             }
+
+            newDoc.__v = undefined;
 
             sendSuccessResponse.JSON({
                 response: res,

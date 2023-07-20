@@ -159,13 +159,6 @@ BootcampSchema.pre('save', async function (next) {
     next();
 });
 
-// query middleware
-BootcampSchema.pre(/^find/, async function (next) {
-    // this point to current query object
-    this.select('-__v');
-    next();
-});
-
 // Cascade delete courses when a bootcamp is deleted (document middleware)
 BootcampSchema.pre('remove', async function (next) {
     // console.log(`Deleting courses of bootcamp ${this._id}`.green);
