@@ -1,16 +1,21 @@
 const router = require('express').Router();
 const { bootcampController } = require('../controllers');
+const courseRouter = require('./courseRoutes');
+
+// Nested route middelware to re-route
+/**
+ * @route GET /api/v1/bootcamps/:bootcampId/courses
+ * @desc get bootcamp courses
+ * @access public
+ */
+router.use('/:bootcampId/courses', courseRouter);
+
 /**
  * @route GET /api/v1/bootcamps
  * @desc get all bootcamps
  * @access public
  */
-router.route('/').get(
-    // unImplementedController.unImplementedYet({
-    //     message: 'Get all Bootcamps, undefined yet',
-    // })
-    bootcampController.getAllBootcamps
-);
+router.route('/').get(bootcampController.getAllBootcamps);
 
 /**
  * @route GET /api/v1/bootcamps/:id

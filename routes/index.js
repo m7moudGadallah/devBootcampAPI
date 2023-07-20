@@ -1,5 +1,6 @@
 // load routes
 const bootcampRouter = require('./bootcampRoutes');
+const courseRouter = require('./courseRoutes');
 
 module.exports = (app) => {
     // testing route
@@ -11,4 +12,5 @@ module.exports = (app) => {
     // });
 
     app.use('/api/v1/bootcamps', bootcampRouter);
+    app.use('/api/v1/courses', courseRouter);
 };
