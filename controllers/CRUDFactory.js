@@ -141,13 +141,15 @@ const factory = function ({ model, docName = 'doc' }) {
      */
     const deleteOne = () =>
         catchAsync(async (req, res, next) => {
-            const doc = await model.findByIdAndDelete(req.params.id);
+            const doc = await model.findById(req.params.id);
 
             if (!doc) {
                 return next(
                     new AppError(`No ${docName} found with that ID`, 404)
                 );
             }
+
+            doc.remove();
 
             sendSuccessResponse.JSON({
                 response: res,
