@@ -22,6 +22,7 @@ const factory = function ({ model, docName = 'doc' }) {
      * @param {string} [options.selectedFields=''] - The fields to include in the returned documents. Use the following format: "field1, field2, -field3" (e.g., "id, name, -password") where a prefix of '-' indicates the field should be excluded from the query result.
      * @param {number} [options.page=1] - The page number for pagination.
      * @param {number} [options.limit=100] - The maximum number of documents per page.
+     * @param {Array} [options.populates=[]] - The array of fields to populate in the document.
      * @returns {function} - The async middleware function for retrieving the documents.
      */
     const getAll = ({
@@ -29,6 +30,7 @@ const factory = function ({ model, docName = 'doc' }) {
         selectedFields = '',
         page = 1,
         limit = 100,
+        populates = [],
     }) =>
         catchAsync(async (req, res, next) => {
             // Create a separate count query without pagination
@@ -46,7 +48,7 @@ const factory = function ({ model, docName = 'doc' }) {
 
             const pagination = {};
             const docs = await apiFeatures
-                .filter()
+                .filter(populates)
                 .sort(sortByFields)
                 .select(selectedFields)
                 .paginate(page, limit, pagination, count).query;
@@ -68,9 +70,11 @@ const factory = function ({ model, docName = 'doc' }) {
      */
     const getOne = ({ populates = [] }) =>
         catchAsync(async (req, res, next) => {
-            const doc = await model.findById(req.params.id);
+            const query = model.findById(req.params.id);
 
-            populates.forEach((item) => doc.populate(item));
+            populates.forEach((item) => query.populate(item));
+
+            const doc = await query;
 
             if (!doc) {
                 return next(
