@@ -36,9 +36,10 @@ class APIFeatures {
     /**
      * Filter the query based on the request query parameters.
      * @function filter
+     * @param {Array} [populates=[]] - The array of fields to populate in the document.
      * @returns {APIFeatures} - The updated APIFeatures instance.
      */
-    filter() {
+    filter(populates = []) {
         try {
             // make a copy from reqQuery and delete excludedFields
             let queryObj = { ...this.#reqQuery };
@@ -70,6 +71,9 @@ class APIFeatures {
             convertValuesToArray('$nin');
 
             this.#resQuery = this.#resQuery.find(queryObj);
+
+            // populate with passed items
+            populates.forEach((item) => this.#resQuery.populate(item));
 
             return this;
         } catch (err) {
@@ -109,7 +113,11 @@ class APIFeatures {
     select(fields = '') {
         try {
             if (this.#reqQuery.fields || this.#reqQuery.select || fields) {
-                const _fields = (this.#reqQuery.fields || fields)
+                const _fields = (
+                    this.#reqQuery.fields ||
+                    this.#reqQuery.select ||
+                    fields
+                )
                     .split(',')
                     .join(' ');
                 this.#resQuery = this.#resQuery.select(_fields);
