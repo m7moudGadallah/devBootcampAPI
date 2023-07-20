@@ -128,14 +128,34 @@ class APIFeatures {
      * @function paginate
      * @param {number} [page=1] - The page number. Default is 1.
      * @param {number} [limit=100] - The number of items per page. Default is 100.
+     * @param {object} pagination - An object to store pagination data.
+     * @param {number} total - The total number of documents in the entire query (not just the current page).
      * @returns {APIFeatures} - The updated APIFeatures instance.
      */
-    paginate(page = 1, limit = 100) {
+    paginate(page = 1, limit = 100, pagination, total) {
         try {
             const _page = +this.#reqQuery.page || page;
             const _limit = +this.#reqQuery.limit || limit;
-            const skip = (_page - 1) * _limit;
-            this.#resQuery = this.#resQuery.skip(skip).limit(_limit);
+            const startIndex = (_page - 1) * _limit;
+            const endIndex = _page * _limit;
+            this.#resQuery = this.#resQuery.skip(startIndex).limit(_limit);
+
+            if (pagination && total) {
+                // fill pagination object
+                if (endIndex < total) {
+                    pagination.next = {
+                        page: _page + 1,
+                        limit: _limit,
+                    };
+                }
+
+                if (startIndex > 0) {
+                    pagination.prev = {
+                        page: _page - 1,
+                        limit: _limit,
+                    };
+                }
+            }
 
             return this;
         } catch (err) {

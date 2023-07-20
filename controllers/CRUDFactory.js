@@ -31,21 +31,30 @@ const factory = function ({ model, docName = 'doc' }) {
         limit = 100,
     }) =>
         catchAsync(async (req, res, next) => {
+            // Create a separate count query without pagination
+            const countDocs = async () => {
+                const countQuery = new APIFeatures(req.query, model);
+                const totalDocsCount = await countQuery
+                    .filter()
+                    .query.countDocuments();
+                return totalDocsCount;
+            };
+
+            const count = await countDocs();
+
             const apiFeatures = new APIFeatures(req.query, model);
 
+            const pagination = {};
             const docs = await apiFeatures
                 .filter()
                 .sort(sortByFields)
                 .select(selectedFields)
-                .paginate(page, limit).query;
-
-            // const data = {};
-            // const docsName = `${docName}s`;
-            // data[docsName] = docs;
+                .paginate(page, limit, pagination, count).query;
 
             sendSuccessResponse.JSON({
                 response: res,
                 count: docs.length,
+                pagination,
                 data: docs,
             });
         });
@@ -69,11 +78,6 @@ const factory = function ({ model, docName = 'doc' }) {
                 );
             }
 
-            doc.__v = undefined;
-
-            // const data = {};
-            // data[docName] = doc;
-
             sendSuccessResponse.JSON({
                 response: res,
                 data: doc,
@@ -91,9 +95,6 @@ const factory = function ({ model, docName = 'doc' }) {
 
             newDoc.__v = undefined;
 
-            // data = {};
-            // data[docName] = newDoc;
-
             sendSuccessResponse.JSON({
                 response: res,
                 statusCode: 201,
@@ -109,7 +110,7 @@ const factory = function ({ model, docName = 'doc' }) {
     const updateOne = () =>
         catchAsync(async (req, res, next) => {
             const newDoc = await model.findOneAndUpdate(
-                {_id: req.params.id},
+                { _id: req.params.id },
                 req.body,
                 {
                     new: true,
@@ -122,11 +123,6 @@ const factory = function ({ model, docName = 'doc' }) {
                     new AppError(`No ${docName} found with that ID`, 404)
                 );
             }
-
-            newDoc.__v = undefined;
-
-            // const data = {};
-            // data[docName] = newDoc;
 
             sendSuccessResponse.JSON({
                 response: res,

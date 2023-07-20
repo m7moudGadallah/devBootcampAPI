@@ -17,11 +17,19 @@
     };
     JSON(options);
 */
-const JSON = ({ response, statusCode = 200, data, message, count }) => {
+const JSON = ({
+    response,
+    statusCode = 200,
+    pagination,
+    data,
+    message,
+    count,
+}) => {
     response.status(statusCode).json({
         success: true,
         message,
         count,
+        pagination,
         data,
     });
 };

@@ -153,6 +153,13 @@ BootcampSchema.pre('save', async function (next) {
     next();
 });
 
+// query middleware
+BootcampSchema.pre(/^find/, async function (next) {
+    // this point to current query object
+    this.select('-__v');
+    next();
+});
+
 const Bootcamp = mongooes.model('Bootcamp', BootcampSchema);
 
 module.exports = Bootcamp;
