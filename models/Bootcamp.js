@@ -75,7 +75,11 @@ const BootcampSchema = new mongooes.Schema(
             max: [10, 'Rating must be at most 10'],
             default: 1,
         },
-        averageCost: Number,
+        averageCost: {
+            type: Number,
+            default: 0.0,
+            set: (val) => Math.round(val * 100) / 100,
+        },
         photo: {
             type: String,
             default: 'no-photo.jpg',
