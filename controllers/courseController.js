@@ -5,6 +5,7 @@ const factory = CRUDFactory({ model: Course, docName: 'course' });
 const setBootcampId = (req, res, next) => {
     if (req.params?.bootcampId) {
         req.query.bootcamp = req.params.bootcampId;
+        req.body.bootcamp = req.params.bootcampId;
     }
 
     next();
