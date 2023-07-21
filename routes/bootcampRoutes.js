@@ -41,6 +41,14 @@ router.route('/').post(bootcampController.createBootcamp);
 router.route('/:id').patch(bootcampController.updateBootcamp);
 
 /**
+ * @route PUT /api/v1/bootcamps/:id/photo
+ * @desc update bootcamp photo
+ * @access private
+ * @auth ['admin']
+ */
+router.route('/:id/photo').put(bootcampController.uploadBootcampPhoto);
+
+/**
  * @route DELETE /api/v1/bootcamps/:id
  * @desc delete a bootcamp
  * @access private

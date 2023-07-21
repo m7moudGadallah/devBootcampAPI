@@ -1,13 +1,15 @@
 const devLogger = require('./devLogger');
 const parser = require('./parser');
 const error = require('./error');
+const statics = require('./statics');
 
 module.exports = (app) => {
     return {
         /**
          * Middlewares before routes
          * @middleware devLogger => Development logging
-         * @middleware parser => body-parser
+         * @middleware parser => body-parser, upload file
+         * @middleware statics => set statitc folder
          */
         pre() {
             // Development logging
@@ -15,6 +17,9 @@ module.exports = (app) => {
 
             // body-parser middleware
             parser(app);
+
+            // static files
+            statics(app);
         },
 
         /**

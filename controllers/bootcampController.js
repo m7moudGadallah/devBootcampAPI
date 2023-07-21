@@ -1,5 +1,15 @@
 const { Bootcamp } = require('../models');
-const { catchAsync, geocoder, sendSuccessResponse } = require('../utils');
+
+// load env values
+const { FILE_UPLOAD_PATH: uploadDir, MAX_FILE_UPLOAD: maxFileSize } =
+    process.env;
+
+const {
+    catchAsync,
+    geocoder,
+    sendSuccessResponse,
+    AppError,
+} = require('../utils');
 const CRUDFactory = require('./CRUDFactory');
 const factory = CRUDFactory({ model: Bootcamp, docName: 'bootcamp' });
 
@@ -77,6 +87,56 @@ const getBootcampsWithinRadius = catchAsync(async (req, res, next) => {
     });
 });
 
+/**
+ * Upload photo for a bootcamp
+ */
+const uploadBootcampPhoto = catchAsync(async (req, res, next) => {
+    const bootcamp = await Bootcamp.findById(req.params.id);
+
+    if (!bootcamp) {
+        return next(new AppError(`No bootcamp found with that ID`, 404));
+    }
+
+    if (!req.files) {
+        return next(new AppError('Please upload a file', 400));
+    }
+
+    const file = req.files.photo;
+
+    // Make sure that uploaded file is a photo
+    if (!file.mimetype.startsWith('image')) {
+        return next(new AppError('Please upload an image file', 400));
+    }
+
+    // check fileSize
+    if (file.size > maxFileSize) {
+        return next(
+            new AppError(`Please upload an image less than ${maxFileSize}`, 400)
+        );
+    }
+    // get image extension
+    const ext = file.mimetype.split('/')[1];
+
+    // create custom filename
+    file.name = `photo_${bootcamp._id}_${Date.now()}.${ext}`;
+
+    // save image
+    file.mv(`${uploadDir}/${file.name}`, async (err) => {
+        if (err) {
+            return next(new AppError('Problem with file upload', 500));
+        }
+
+        await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
+
+        sendSuccessResponse.JSON({
+            response: res,
+            data: {
+                photo: file.name,
+            },
+        });
+    });
+});
+
 module.exports = {
     getAllBootcamps,
     getBootcamp,
@@ -84,4 +144,5 @@ module.exports = {
     updateBootcamp,
     deleteBootcamp,
     getBootcampsWithinRadius,
+    uploadBootcampPhoto,
 };
