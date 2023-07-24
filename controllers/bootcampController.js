@@ -14,7 +14,9 @@ const CRUDFactory = require('./CRUDFactory');
 const factory = new CRUDFactory(Bootcamp, { docName: 'bootcamp' });
 
 /**
- * Get all bootcamps from the database and send a success response with the bootcamps data.
+ * @route GET /api/v1/bootcamps
+ * @desc Get all bootcamps from the database and send a success response with the bootcamps data.
+ * @access public
  */
 const getAllBootcamps = factory.getAll({
     sortByFields: '-createdAt',
@@ -27,7 +29,9 @@ const getAllBootcamps = factory.getAll({
 });
 
 /**
- * Get a single bootcamp by ID from the database and send a success response with the bootcamp data.
+ * @route GET /api/v1/bootcamps/:id
+ * @desc Get a single bootcamp by ID from the database and send a success response with the bootcamp data.
+ * @access public
  */
 const getBootcamp = factory.getOne({
     populates: [
@@ -39,22 +43,35 @@ const getBootcamp = factory.getOne({
 });
 
 /**
- * Create a new bootcamp and send a success response with the created bootcamp data.
+ * @route POST /api/v1/bootcamps
+ * @desc Create a new bootcamp and send a success response with the created bootcamp data.
+ * @access private
+ * @auth ['admin']
  */
 const createBootcamp = factory.createOne();
 
 /**
- * Update a bootcamp by ID in the database and send a success response with the updated bootcamp data.
+ * @route PATCH /api/v1/bootcamps/:id
+ * @desc Update a bootcamp by ID in the database and send a success response with the updated bootcamp data.
+ * @access private
+ * @auth ['admin']
  */
 const updateBootcamp = factory.updateOne();
 
 /**
- * Delete a bootcamp by ID from the database and send a success response with a null data.
+ * @route DELETE /api/v1/bootcamps/:id
+ * @desc Delete a bootcamp by ID from the database and send a success response with a null data.
+ * @access private
+ * @auth ['admin']
  */
 const deleteBootcamp = factory.deleteOne();
 
 /**
- * Get bootcamps within a specified radius of a given location.
+ * @route GET /api/v1/bootcamps/radius/:zipcode/:distance/:unit
+ * @desc Get bootcamps within a specified radius of a given location.
+ * @access private
+ * @auth all
+ *
  * @param {string} req.params.zipcode - The zipcode of the location to search from.
  * @param {number} req.params.distance - The distance in either miles (mi) or kilometers (km) to search within.
  * @param {string} [req.params.unit='mi'] - The unit of distance to use, either 'mi' for miles or 'km' for kilometers.
@@ -88,7 +105,10 @@ const getBootcampsWithinRadius = catchAsync(async (req, res, next) => {
 });
 
 /**
- * Upload photo for a bootcamp
+ * @route PUT /api/v1/bootcamps/:id/photo
+ * @desc Upload photo for a bootcamp
+ * @access private
+ * @auth ['admin']
  */
 const uploadBootcampPhoto = catchAsync(async (req, res, next) => {
     const bootcamp = await Bootcamp.findById(req.params.id);

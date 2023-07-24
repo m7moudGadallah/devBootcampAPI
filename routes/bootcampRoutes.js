@@ -5,63 +5,24 @@ const courseRouter = require('./courseRoutes');
 // Nested route middelware to re-route
 /**
  * @route GET /api/v1/bootcamps/:bootcampId/courses
- * @desc get bootcamp courses
+ * @desc access bootcamp courses
  * @access public
  */
 router.use('/:bootcampId/courses', courseRouter);
 
-/**
- * @route GET /api/v1/bootcamps
- * @desc get all bootcamps
- * @access public
- */
-router.route('/').get(bootcampController.getAllBootcamps);
+router
+    .route('/')
+    .get(bootcampController.getAllBootcamps)
+    .post(bootcampController.createBootcamp);
 
-/**
- * @route GET /api/v1/bootcamps/:id
- * @desc get a bootcamp by id
- * @access public
- */
-router.route('/:id').get(bootcampController.getBootcamp);
+router
+    .route('/:id')
+    .get(bootcampController.getBootcamp)
+    .patch(bootcampController.updateBootcamp)
+    .delete(bootcampController.deleteBootcamp);
 
-/**
- * @route POST /api/v1/bootcamps
- * @desc create a bootcamp
- * @access private
- * @auth ['admin']
- */
-router.route('/').post(bootcampController.createBootcamp);
-
-/**
- * @route PATCH /api/v1/bootcamps/:id
- * @desc update a bootcamp
- * @access private
- * @auth ['admin']
- */
-router.route('/:id').patch(bootcampController.updateBootcamp);
-
-/**
- * @route PUT /api/v1/bootcamps/:id/photo
- * @desc update bootcamp photo
- * @access private
- * @auth ['admin']
- */
 router.route('/:id/photo').put(bootcampController.uploadBootcampPhoto);
 
-/**
- * @route DELETE /api/v1/bootcamps/:id
- * @desc delete a bootcamp
- * @access private
- * @auth ['admin']
- */
-router.route('/:id').delete(bootcampController.deleteBootcamp);
-
-/**
- * @route GET /api/v1/bootcamps/radius/:zipcode/:distance/:unit
- * @desc Get bootcamps within a radius
- * @access private
- * @auth all
- */
 router
     .route('/radius/:zipcode/:distance/:unit')
     .get(bootcampController.getBootcampsWithinRadius);
