@@ -125,7 +125,6 @@ class APIFeatures {
                 this.#resQuery = this.#resQuery.select('-__v');
             }
 
-
             return this;
         } catch (err) {
             throw err;
@@ -154,14 +153,14 @@ class APIFeatures {
                 if (endIndex < total) {
                     pagination.next = {
                         page: _page + 1,
-                        limit: _limit,
+                        pageSize: _limit,
                     };
                 }
 
                 if (startIndex > 0) {
                     pagination.prev = {
                         page: _page - 1,
-                        limit: _limit,
+                        pageSize: _limit,
                     };
                 }
             }

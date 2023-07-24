@@ -62,8 +62,7 @@ class CRUDFactory {
                 .select(selectedFields)
                 .paginate(page, limit, pagination, count).query;
 
-            sendSuccessResponse.JSON({
-                response: res,
+            sendSuccessResponse({ response: res }).JSON({
                 count: docs.length,
                 pagination,
                 data: docs,
@@ -95,8 +94,7 @@ class CRUDFactory {
 
             doc.__v = undefined;
 
-            sendSuccessResponse.JSON({
-                response: res,
+            sendSuccessResponse({ response: res }).JSON({
                 data: doc,
             });
         });
@@ -114,9 +112,7 @@ class CRUDFactory {
 
             newDoc.__v = undefined;
 
-            sendSuccessResponse.JSON({
-                response: res,
-                statusCode: 201,
+            sendSuccessResponse({ response: res, statusCode: 201 }).JSON({
                 data: newDoc,
             });
         });
@@ -147,8 +143,7 @@ class CRUDFactory {
 
             newDoc.__v = undefined;
 
-            sendSuccessResponse.JSON({
-                response: res,
+            sendSuccessResponse({ response: res }).JSON({
                 data: newDoc,
             });
         });
@@ -172,8 +167,7 @@ class CRUDFactory {
 
             doc.remove();
 
-            sendSuccessResponse.JSON({
-                response: res,
+            sendSuccessResponse({ response: res }).JSON({
                 data: null,
             });
         });

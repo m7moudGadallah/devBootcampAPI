@@ -97,8 +97,7 @@ const getBootcampsWithinRadius = catchAsync(async (req, res, next) => {
     }).select('-__v');
 
     // send response
-    sendSuccessResponse.JSON({
-        response: res,
+    sendSuccessResponse({ response: res }).JSON({
         count: bootcamps.length,
         data: bootcamps,
     });
@@ -148,8 +147,7 @@ const uploadBootcampPhoto = catchAsync(async (req, res, next) => {
 
         await Bootcamp.findByIdAndUpdate(req.params.id, { photo: file.name });
 
-        sendSuccessResponse.JSON({
-            response: res,
+        sendSuccessResponse({ response: res }).JSON({
             data: {
                 photo: file.name,
             },
