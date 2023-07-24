@@ -20,6 +20,7 @@
 const JSON = ({
     response,
     statusCode = 200,
+    token,
     pagination,
     data,
     message,
@@ -27,6 +28,7 @@ const JSON = ({
 }) => {
     response.status(statusCode).json({
         success: true,
+        token,
         message,
         count,
         pagination,
