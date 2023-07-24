@@ -1,6 +1,6 @@
 const { Course } = require('../models');
 const CRUDFactory = require('./CRUDFactory');
-const factory = CRUDFactory({ model: Course, docName: 'course' });
+const factory = new CRUDFactory(Course, { docName: 'course' });
 
 const setBootcampId = (req, res, next) => {
     if (req.params?.bootcampId) {

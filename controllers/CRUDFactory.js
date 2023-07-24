@@ -6,36 +6,45 @@ const {
 } = require('../utils');
 
 /**
- * Factory function for creating controller methods for CRUD operations on a specified model.
- * @function factory
- * @param {object} options - The options for creating the controller methods.
- * @param {Model} options.model - The model to perform CRUD operations on.
- * @param {string} [options.docName='doc'] - The name to assign to the document in the response data.
- * @returns {object} - The controller methods object.
+ * Class representing a CRUD (Create, Read, Update, Delete) factory for a specific model.
+ * @class CRUDFactory
  */
-const factory = function ({ model, docName = 'doc' }) {
+class CRUDFactory {
+    /**
+     * Create a CRUDFactory instance.
+     * @constructor
+     * @param {Model} model - The Mongoose model for which CRUD operations will be performed.
+     * @param {Object} options - Additional options for the CRUDFactory.
+     * @param {string} [options.docName='doc'] - The name of the documents managed by the model.
+     */
+    constructor(model, { docName = 'doc' }) {
+        this.model = model;
+        this.docName = docName;
+    }
+
     /**
      * Get all documents from the specified model with advanced querying options.
      * @function getAll
-     * @param {object} options - The options for retrieving the documents.
+     * @async
+     * @param {Object} options - The options for retrieving the documents.
      * @param {string} [options.sortByFields=''] - The fields to sort the documents by. Use the following format: "field1,field2,-field3" (e.g., "id,-name") where a prefix of '-' indicates descending order.
      * @param {string} [options.selectedFields=''] - The fields to include in the returned documents. Use the following format: "field1, field2, -field3" (e.g., "id, name, -password") where a prefix of '-' indicates the field should be excluded from the query result.
      * @param {number} [options.page=1] - The page number for pagination.
      * @param {number} [options.limit=100] - The maximum number of documents per page.
      * @param {Array} [options.populates=[]] - The array of fields to populate in the document.
-     * @returns {function} - The async middleware function for retrieving the documents.
+     * @returns {Function} - The async middleware function for retrieving the documents.
      */
-    const getAll = ({
+    getAll({
         sortByFields = '',
         selectedFields = '',
         page = 1,
         limit = 100,
         populates = [],
-    }) =>
-        catchAsync(async (req, res, next) => {
+    }) {
+        return catchAsync(async (req, res, next) => {
             // Create a separate count query without pagination
             const countDocs = async () => {
-                const countQuery = new APIFeatures(req.query, model);
+                const countQuery = new APIFeatures(req.query, this.model);
                 const totalDocsCount = await countQuery
                     .filter()
                     .query.countDocuments();
@@ -44,7 +53,7 @@ const factory = function ({ model, docName = 'doc' }) {
 
             const count = await countDocs();
 
-            const apiFeatures = new APIFeatures(req.query, model);
+            const apiFeatures = new APIFeatures(req.query, this.model);
 
             const pagination = {};
             const docs = await apiFeatures
@@ -60,17 +69,19 @@ const factory = function ({ model, docName = 'doc' }) {
                 data: docs,
             });
         });
+    }
 
     /**
      * Get a single document by ID from the specified model.
      * @function getOne
-     * @param {object} options - The options for retrieving the document.
+     * @async
+     * @param {Object} options - The options for retrieving the document.
      * @param {Array} [options.populates=[]] - The array of fields to populate in the document.
-     * @returns {function} - The async middleware function for retrieving the document.
+     * @returns {Function} - The async middleware function for retrieving the document.
      */
-    const getOne = ({ populates = [] }) =>
-        catchAsync(async (req, res, next) => {
-            const query = model.findById(req.params.id);
+    getOne({ populates = [] }) {
+        return catchAsync(async (req, res, next) => {
+            const query = this.model.findById(req.params.id);
 
             populates.forEach((item) => query.populate(item));
 
@@ -78,7 +89,7 @@ const factory = function ({ model, docName = 'doc' }) {
 
             if (!doc) {
                 return next(
-                    new AppError(`No ${docName} found with that ID`, 404)
+                    new AppError(`No ${this.docName} found with that ID`, 404)
                 );
             }
 
@@ -89,15 +100,17 @@ const factory = function ({ model, docName = 'doc' }) {
                 data: doc,
             });
         });
+    }
 
     /**
      * Create a new document in the specified model.
      * @function createOne
-     * @returns {function} - The async middleware function for creating the document.
+     * @async
+     * @returns {Function} - The async middleware function for creating the document.
      */
-    const createOne = () =>
-        catchAsync(async (req, res, next) => {
-            const newDoc = await model.create(req.body);
+    createOne() {
+        return catchAsync(async (req, res, next) => {
+            const newDoc = await this.model.create(req.body);
 
             newDoc.__v = undefined;
 
@@ -107,15 +120,17 @@ const factory = function ({ model, docName = 'doc' }) {
                 data: newDoc,
             });
         });
+    }
 
     /**
      * Update a document by ID in the specified model.
      * @function updateOne
-     * @returns {function} - The async middleware function for updating the document.
+     * @async
+     * @returns {Function} - The async middleware function for updating the document.
      */
-    const updateOne = () =>
-        catchAsync(async (req, res, next) => {
-            const newDoc = await model.findOneAndUpdate(
+    updateOne() {
+        return catchAsync(async (req, res, next) => {
+            const newDoc = await this.model.findOneAndUpdate(
                 { _id: req.params.id },
                 req.body,
                 {
@@ -126,7 +141,7 @@ const factory = function ({ model, docName = 'doc' }) {
 
             if (!newDoc) {
                 return next(
-                    new AppError(`No ${docName} found with that ID`, 404)
+                    new AppError(`No ${this.docName} found with that ID`, 404)
                 );
             }
 
@@ -137,19 +152,21 @@ const factory = function ({ model, docName = 'doc' }) {
                 data: newDoc,
             });
         });
+    }
 
     /**
      * Delete a document by ID from the specified model.
      * @function deleteOne
-     * @returns {function} - The async middleware function for deleting the document.
+     * @async
+     * @returns {Function} - The async middleware function for deleting the document.
      */
-    const deleteOne = () =>
-        catchAsync(async (req, res, next) => {
-            const doc = await model.findById(req.params.id);
+    deleteOne() {
+        return catchAsync(async (req, res, next) => {
+            const doc = await this.model.findById(req.params.id);
 
             if (!doc) {
                 return next(
-                    new AppError(`No ${docName} found with that ID`, 404)
+                    new AppError(`No ${this.docName} found with that ID`, 404)
                 );
             }
 
@@ -160,14 +177,7 @@ const factory = function ({ model, docName = 'doc' }) {
                 data: null,
             });
         });
+    }
+}
 
-    return {
-        getAll,
-        getOne,
-        createOne,
-        updateOne,
-        deleteOne,
-    };
-};
-
-module.exports = factory;
+module.exports = CRUDFactory;

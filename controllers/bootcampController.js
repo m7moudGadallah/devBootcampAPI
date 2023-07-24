@@ -11,7 +11,7 @@ const {
     AppError,
 } = require('../utils');
 const CRUDFactory = require('./CRUDFactory');
-const factory = CRUDFactory({ model: Bootcamp, docName: 'bootcamp' });
+const factory = new CRUDFactory(Bootcamp, { docName: 'bootcamp' });
 
 /**
  * Get all bootcamps from the database and send a success response with the bootcamps data.
