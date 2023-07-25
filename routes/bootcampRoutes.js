@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { bootcampController } = require('../controllers');
+const { bootcampController, authController } = require('../controllers');
 const courseRouter = require('./courseRoutes');
 
 // Nested route middelware to re-route
@@ -13,13 +13,15 @@ router.use('/:bootcampId/courses', courseRouter);
 router
     .route('/')
     .get(bootcampController.getAllBootcamps)
-    .post(bootcampController.createBootcamp);
+    .post(authController.protect, bootcampController.createBootcamp);
 
 router
     .route('/:id')
     .get(bootcampController.getBootcamp)
-    .patch(bootcampController.updateBootcamp)
-    .delete(bootcampController.deleteBootcamp);
+    .patch(authController.protect, bootcampController.updateBootcamp)
+    .delete(authController.protect, bootcampController.deleteBootcamp);
+
+router.use(authController.protect);
 
 router.route('/:id/photo').put(bootcampController.uploadBootcampPhoto);
 

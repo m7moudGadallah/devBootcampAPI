@@ -68,6 +68,7 @@ const sendSuccessResponse = function ({ response, statusCode = 200 }) {
          * Sends a JSON response with the specified status code, data, and message.
          * @function JSON
          * @param {object} options - The options for the JSON response.
+         * @param {string} token - The JWT token.
          * @param {object} [options.data] - The data to be included in the response.
          * @param {number} [options.count] - The number of data items in the response.
          * @example
@@ -79,9 +80,10 @@ const sendSuccessResponse = function ({ response, statusCode = 200 }) {
             };
             JSON(options);
         */
-        JSON({ pagination, data, count }) {
+        JSON({ token, pagination, data, count }) {
             response.status(statusCode).json({
                 success: true,
+                token,
                 count,
                 pagination,
                 data,

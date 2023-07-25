@@ -1,15 +1,19 @@
 const router = require('express').Router({ mergeParams: true });
-const { courseController } = require('../controllers');
+const { courseController, authController } = require('../controllers');
 
 router
     .route('/')
     .get(courseController.setBootcampId, courseController.getAllCourses)
-    .post(courseController.setBootcampId, courseController.createCourse);
+    .post(
+        authController.protect,
+        courseController.setBootcampId,
+        courseController.createCourse
+    );
 
 router
     .route('/:id')
     .get(courseController.getCourse)
-    .patch(courseController.updateCourse)
-    .delete(courseController.deleteCourse);
+    .patch(authController.protect, courseController.updateCourse)
+    .delete(authController.protect, courseController.deleteCourse);
 
 module.exports = router;

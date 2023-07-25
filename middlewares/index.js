@@ -8,7 +8,7 @@ module.exports = (app) => {
         /**
          * Middlewares before routes
          * @middleware devLogger => Development logging
-         * @middleware parser => body-parser, upload file
+         * @middleware parser => body-parser, upload file, cookie-parser
          * @middleware statics => set statitc folder
          */
         pre() {
