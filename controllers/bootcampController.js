@@ -46,7 +46,7 @@ const getBootcamp = factory.getOne({
  * @route POST /api/v1/bootcamps
  * @desc Create a new bootcamp and send a success response with the created bootcamp data.
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const createBootcamp = factory.createOne();
 
@@ -54,7 +54,7 @@ const createBootcamp = factory.createOne();
  * @route PATCH /api/v1/bootcamps/:id
  * @desc Update a bootcamp by ID in the database and send a success response with the updated bootcamp data.
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const updateBootcamp = factory.updateOne();
 
@@ -62,7 +62,7 @@ const updateBootcamp = factory.updateOne();
  * @route DELETE /api/v1/bootcamps/:id
  * @desc Delete a bootcamp by ID from the database and send a success response with a null data.
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const deleteBootcamp = factory.deleteOne();
 
@@ -107,7 +107,7 @@ const getBootcampsWithinRadius = catchAsync(async (req, res, next) => {
  * @route PUT /api/v1/bootcamps/:id/photo
  * @desc Upload photo for a bootcamp
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const uploadBootcampPhoto = catchAsync(async (req, res, next) => {
     const bootcamp = await Bootcamp.findById(req.params.id);

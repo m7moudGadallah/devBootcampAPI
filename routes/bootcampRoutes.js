@@ -10,23 +10,33 @@ const courseRouter = require('./courseRoutes');
  */
 router.use('/:bootcampId/courses', courseRouter);
 
-router
-    .route('/')
-    .get(bootcampController.getAllBootcamps)
-    .post(authController.protect, bootcampController.createBootcamp);
+/**
+ * @access public
+ */
+router.route('/').get(bootcampController.getAllBootcamps);
+router.route('/:id').get(bootcampController.getBootcamp);
 
-router
-    .route('/:id')
-    .get(bootcampController.getBootcamp)
-    .patch(authController.protect, bootcampController.updateBootcamp)
-    .delete(authController.protect, bootcampController.deleteBootcamp);
-
+/**
+ * @access private
+ */
 router.use(authController.protect);
-
-router.route('/:id/photo').put(bootcampController.uploadBootcampPhoto);
 
 router
     .route('/radius/:zipcode/:distance/:unit')
     .get(bootcampController.getBootcampsWithinRadius);
+
+/**
+ * @auth ['admin', 'publisher']
+ */
+router.use(authController.authorize('admin', 'publisher'));
+
+router.route('/').post(bootcampController.createBootcamp);
+
+router
+    .route('/:id')
+    .patch(bootcampController.updateBootcamp)
+    .delete(bootcampController.deleteBootcamp);
+
+router.route('/:id/photo').put(bootcampController.uploadBootcampPhoto);
 
 module.exports = router;

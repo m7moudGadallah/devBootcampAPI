@@ -58,6 +58,24 @@ const protect = catchAsync(async (req, res, next) => {
     next();
 });
 
+/**
+ * @middleware Authorize user before accessing resourses
+ */
+const authorize = function (...roles) {
+    return function (req, res, next) {
+        if (!roles.includes(req.user.role)) {
+            return next(
+                new AppError(
+                    `You don't have a permission to perform this actoin`,
+                    403
+                )
+            );
+        }
+
+        return next();
+    };
+};
+
 /*------------------------------(controllers)------------------------------*/
 /**
  * @route GET /api/v1/auth/me
@@ -134,5 +152,6 @@ module.exports = {
     register,
     login,
     protect,
+    authorize,
     getMe,
 };

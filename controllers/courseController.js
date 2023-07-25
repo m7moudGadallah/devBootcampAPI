@@ -44,7 +44,7 @@ const getCourse = factory.getOne({
  * @route POST /api/v1/bootcamps/:bootcampId/courses
  * @desc create a Course
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const createCourse = factory.createOne();
 
@@ -52,7 +52,7 @@ const createCourse = factory.createOne();
  * @route PATCH /api/v1/courses/:id
  * @desc Update a course by ID in the database and send a success response with the updated course data.
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const updateCourse = factory.updateOne();
 
@@ -60,7 +60,7 @@ const updateCourse = factory.updateOne();
  * @route DELETE /api/v1/courses/:id
  * @desc Delete a course by ID from the database and send a success response with a null data.
  * @access private
- * @auth ['admin']
+ * @auth ['admin', 'publisher']
  */
 const deleteCourse = factory.deleteOne();
 
