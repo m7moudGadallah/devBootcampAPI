@@ -1,47 +1,48 @@
 {
-  "name": "devcamp",
-  "version": "1.0.0",
-  "description": "devBootcamp API",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon -L server.js",
-    "start:prod": "NODE_ENV=production nodemon -L server"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/m7moudGadallah/devBootcampAPI.git"
-  },
-  "author": "Mahmoud Gadallah",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/m7moudGadallah/devBootcampAPI/issues"
-  },
-  "homepage": "https://github.com/m7moudGadallah/devBootcampAPI#readme",
-  "devDependencies": {
-    "eslint": "^8.36.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.7.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.2",
-    "morgan": "^1.10.0",
-    "nodemon": "^3.0.1",
-    "prettier": "^2.8.4"
-  },
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-fileupload": "^1.4.0",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^5.13.20",
-    "node-geocoder": "^3.29.0",
-    "slugify": "^1.6.6",
-    "validator": "^13.9.0"
-  }
+    "name": "devcamp",
+    "version": "1.0.0",
+    "description": "devBootcamp API",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start:dev": "nodemon -L server.js",
+        "start:prod": "NODE_ENV=production nodemon -L server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/m7moudGadallah/devBootcampAPI.git"
+    },
+    "author": "Mahmoud Gadallah",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/m7moudGadallah/devBootcampAPI/issues"
+    },
+    "homepage": "https://github.com/m7moudGadallah/devBootcampAPI#readme",
+    "devDependencies": {
+        "eslint": "^8.36.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-prettier": "^8.7.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-jsx-a11y": "^6.7.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-react": "^7.32.2",
+        "morgan": "^1.10.0",
+        "nodemon": "^3.0.1",
+        "prettier": "^2.8.4"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "colors": "^1.4.0",
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-fileupload": "^1.4.0",
+        "jsonwebtoken": "^9.0.1",
+        "mongoose": "^5.13.20",
+        "node-geocoder": "^3.29.0",
+        "nodemailer": "^6.9.4",
+        "slugify": "^1.6.6",
+        "validator": "^13.9.0"
+    }
 }

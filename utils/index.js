@@ -3,6 +3,7 @@ const catchAsync = require('./catchAsync');
 const AppError = require('./AppError');
 const APIFeatures = require('./APIFeatures');
 const geocoder = require('./geocoder');
+const sendEmail = require('./sendEmail');
 
 module.exports = {
     sendSuccessResponse,
@@ -10,4 +11,5 @@ module.exports = {
     AppError,
     APIFeatures,
     geocoder,
+    sendEmail,
 };

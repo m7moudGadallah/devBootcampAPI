@@ -1,8 +1,12 @@
-const { response } = require('express');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 const { User } = require('../models');
-const { catchAsync, AppError, sendSuccessResponse } = require('../utils');
+const {
+    catchAsync,
+    AppError,
+    sendSuccessResponse,
+    sendEmail,
+} = require('../utils');
 
 /*------------------------------(middlewares)------------------------------*/
 /**
@@ -78,10 +82,9 @@ const authorize = function (...roles) {
 
 /*------------------------------(controllers)------------------------------*/
 /**
- * @route GET /api/v1/auth/me
- * @desc GET logged in user data
- * @access private
- * @auth all
+ * @route POST /api/v1/auth/register
+ * @desc Register new user
+ * @access public
  */
 const register = catchAsync(async (req, res, next) => {
     // Get user data from req body
@@ -140,8 +143,70 @@ const login = catchAsync(async (req, res, next) => {
 });
 
 /**
- * @route POST /api/v1/auth/login
- * @desc Log user in
+ * @route POST /api/v1/auth/forgetPassword
+ * @desc Forget Password
+ * @access public
+ */
+const forgetPassword = catchAsync(async (req, res, next) => {
+    // Check if email is already posted
+    const { email } = req.body;
+
+    if (!email) {
+        return next(new AppError('Please provide email', 400));
+    }
+
+    // Get user of posted email and check if this user already exist
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return next(new AppError('There is no user with this email', 404));
+    }
+
+    // Generate random token
+    const resetToken = user.createPasswordResetToken();
+    await user.save({ validateBeforeSave: false });
+
+    // send email to user with token
+    try {
+        // create reset link
+        const resetURL = `${req.protocol}://${req.get(
+            'host'
+        )}/api/v1/auth/resetPassword/${resetToken}`;
+
+        // create message
+        const message = `Your are receiving this email because you (or someone else) asked to reset password.\nSubmit your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email`;
+
+        // call sendEmail
+        //BUG: Socket Error because port is refused from firewall
+        await sendEmail({
+            email: user.email,
+            subject: 'Your password reset token (valid for 10 min)',
+            message,
+        });
+
+        // send response that email is sent
+        sendSuccessResponse({ response: res }).JSON({
+            data: { message: 'Token sent to email!' },
+        });
+    } catch (err) {
+        // rollback changes
+        // console.log(err);
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({ validateBeforeSave: false });
+
+        return next(
+            new AppError(
+                'There was an error Sending the email. Try again later!',
+                500
+            )
+        );
+    }
+});
+
+/**
+ * @route GET /api/v1/auth/me
+ * @desc GET logged in user data
  * @access public
  */
 const getMe = catchAsync(async (req, res, next) => {
@@ -154,4 +219,5 @@ module.exports = {
     protect,
     authorize,
     getMe,
+    forgetPassword,
 };
