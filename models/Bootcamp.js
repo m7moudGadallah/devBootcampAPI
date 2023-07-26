@@ -104,6 +104,11 @@ const BootcampSchema = new mongooes.Schema(
             type: Date,
             default: Date.now(),
         },
+        user: {
+            type: mongooes.Schema.ObjectId,
+            ref: 'User',
+            required: [true, 'Bootcamp should have a user who create it'],
+        },
     },
     {
         toJSON: { virtuals: true },

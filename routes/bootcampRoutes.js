@@ -32,11 +32,21 @@ router.use(authController.authorize('admin', 'publisher'));
 
 router.route('/').post(bootcampController.createBootcamp);
 
+router.use(bootcampController.setUserId);
+
 router
     .route('/:id')
-    .patch(bootcampController.updateBootcamp)
-    .delete(bootcampController.deleteBootcamp);
+    .patch(bootcampController.checkOwnerShip, bootcampController.updateBootcamp)
+    .delete(
+        bootcampController.checkOwnerShip,
+        bootcampController.deleteBootcamp
+    );
 
-router.route('/:id/photo').put(bootcampController.uploadBootcampPhoto);
+router
+    .route('/:id/photo')
+    .put(
+        bootcampController.checkOwnerShip,
+        bootcampController.uploadBootcampPhoto
+    );
 
 module.exports = router;

@@ -13,6 +13,39 @@ const {
 const CRUDFactory = require('./CRUDFactory');
 const factory = new CRUDFactory(Bootcamp, { docName: 'bootcamp' });
 
+/*------------------------------------(Middlewares)------------------------------------*/
+/**
+ * @middleware setUserId
+ * @decs Set use id in req body
+ */
+const setUserId = (req, res, next) => {
+    req.body.user = req.user._id;
+    next();
+};
+
+/**
+ * @middleware ownerShip
+ * @decs Check if user is the owner if this bootcamp or not
+ */
+const checkOwnerShip = catchAsync(async (req, res, next) => {
+    // get bootcamp
+    const bootcamp = await Bootcamp.findById(req.params.id);
+
+    // check if the user owns this bootcamp
+    if (!(req.user.role === 'admin' || bootcamp.user.toString() === req.body.user.toString())) {
+        return next(
+            new AppError(
+                `you are not authorized to modify or delete this bootcamp`,
+                401
+            )
+        );
+    }
+
+    return next();
+});
+
+/*------------------------------------(Controllers)------------------------------------*/
+
 /**
  * @route GET /api/v1/bootcamps
  * @desc Get all bootcamps from the database and send a success response with the bootcamps data.
@@ -163,4 +196,6 @@ module.exports = {
     deleteBootcamp,
     getBootcampsWithinRadius,
     uploadBootcampPhoto,
+    setUserId,
+    checkOwnerShip,
 };
