@@ -27,9 +27,11 @@ router
         courseController.createCourse
     );
 
+router.use(courseController.setUserId);
+
 router
     .route('/:id')
-    .patch(authController.protect, courseController.updateCourse)
-    .delete(authController.protect, courseController.deleteCourse);
+    .patch(courseController.checkOwnerShip, courseController.updateCourse)
+    .delete(courseController.checkOwnerShip, courseController.deleteCourse);
 
 module.exports = router;
