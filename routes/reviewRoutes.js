@@ -23,9 +23,14 @@ router
 
 router
     .route('/:id')
-    .patch(authController.authorize('user'), reviewController.updateReview)
+    .patch(
+        authController.authorize('user'),
+        reviewController.checkOwnerShip,
+        reviewController.updateReview
+    )
     .delete(
         authController.authorize('admin', 'user'),
+        reviewController.checkOwnerShip,
         reviewController.deleteReview
     );
 

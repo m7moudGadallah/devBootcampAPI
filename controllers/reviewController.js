@@ -1,4 +1,5 @@
 const { Review } = require('../models');
+const {catchAsync, AppError} = require('../utils');
 const CRUDFactory = require('./CRUDFactory');
 const factory = new CRUDFactory(Review, { docName: 'review' });
 
@@ -24,6 +25,32 @@ const setUserId = (req, res, next) => {
     req.body.user = req.user._id;
     next();
 };
+
+/**
+ * @middleware ownerShip
+ * @decs Check if user is the owner if this review or not
+ */
+const checkOwnerShip = catchAsync(async (req, res, next) => {
+    // get course
+    const review = await Review.findById(req.params.id);
+
+    // check if the user owns this course
+    if (
+        !(
+            req.user.role === 'admin' ||
+            review.user.toString() === req.body.user.toString()
+        )
+    ) {
+        return next(
+            new AppError(
+                `you are not authorized to modify or delete this review`,
+                401
+            )
+        );
+    }
+
+    return next();
+});
 
 /*------------------------------------(Controllers)------------------------------------*/
 /**
@@ -69,6 +96,7 @@ const deleteReview = factory.deleteOne();
 module.exports = {
     setBootcampId,
     setUserId,
+    checkOwnerShip,
     getAllReviews,
     createReview,
     updateReview,
