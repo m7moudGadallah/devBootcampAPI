@@ -12,19 +12,19 @@
 
 <!-- TOC -->
 
-- [Dev Bootcamps API](#dev-bootcamps-api)
-    - [Content](#content)
-    - [Description](#description)
-    - [Project Specification](#project-specification)
-    - [Installation](#installation)
-    - [Usage](#usage)
-        - [Development Mode](#development-mode)
-        - [Production Mode](#production-mode)
-    - [Version](#version)
-    - [License](#license)
-    - [How to Use the API](#how-to-use-the-api)
-    - [Technologies Used](#technologies-used)
-    - [Acknowledgments](#acknowledgments)
+-   [Dev Bootcamps API](#dev-bootcamps-api)
+    -   [Content](#content)
+    -   [Description](#description)
+    -   [Project Specification](#project-specification)
+    -   [Installation](#installation)
+    -   [Usage](#usage)
+        -   [Development Mode](#development-mode)
+        -   [Production Mode](#production-mode)
+    -   [Version](#version)
+    -   [License](#license)
+    -   [How to Use the API](#how-to-use-the-api)
+    -   [Technologies Used](#technologies-used)
+    -   [Acknowledgments](#acknowledgments)
 
 <!-- /TOC -->
 
@@ -36,7 +36,7 @@ This is the backend for a bootcamp directory website that provides information a
 
 ## Project Specification
 
-For detailed information about the project's specifications, please refer to [projectSpecifications.md](./docs/documentation/projectSpecifications.md).
+For detailed information about the project's specifications, please refer to [projectSpecifications.md](./docs/projectSpecifications.md).
 
 ## Installation
 
@@ -74,7 +74,7 @@ Current version: v1.0.0
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE) file for details.
 
 **_[⬆️top](#content)_**
 
