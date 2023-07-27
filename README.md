@@ -100,3 +100,5 @@ This project is based on the teachings and materials from the Node.js API Master
 Course Link: [Node.js API Masterclass With Express & MongoDB](https://www.udemy.com/course/nodejs-api-masterclass/)
 
 **_[⬆️top](#content)_**
+
+> Note: Please note that this project may have been customized or extended beyond the original course content to meet specific requirements or add additional features.
