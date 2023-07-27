@@ -73,7 +73,8 @@ const BootcampSchema = new mongooes.Schema(
             type: Number,
             min: [1, 'Rating must be at least 1'],
             max: [10, 'Rating must be at most 10'],
-            default: 1,
+            default: 1.0,
+            set: (val) => Math.round(val * 100) / 100,
         },
         averageCost: {
             type: Number,
@@ -168,10 +169,11 @@ BootcampSchema.pre('save', async function (next) {
     next();
 });
 
-// Cascade delete courses when a bootcamp is deleted (document middleware)
+// Cascade delete courses & reviews when a bootcamp is deleted (document middleware)
 BootcampSchema.pre('remove', async function (next) {
     // console.log(`Deleting courses of bootcamp ${this._id}`.green);
     await this.model('Course').deleteMany({ bootcamp: this._id });
+    await this.model('Review').deleteMany({ bootcamp: this._id });
     next();
 });
 

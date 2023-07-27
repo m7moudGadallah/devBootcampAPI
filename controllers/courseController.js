@@ -59,7 +59,15 @@ const checkOwnerShip = catchAsync(async (req, res, next) => {
  * @desc Get all courses from the database and send a success response with the courses data.
  * @access public
  */
-const getAllCourses = factory.getAll({ sortByFields: '-createdAt' });
+const getAllCourses = factory.getAll({
+    sortByFields: '-createdAt',
+    populates: [
+        {
+            path: 'bootcamp',
+            select: 'name description',
+        },
+    ],
+});
 
 /**
  * @route GET /api/v1/courses/:id

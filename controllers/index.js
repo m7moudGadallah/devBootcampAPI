@@ -6,6 +6,7 @@ const globalErrorHandler = require('./globalErrorHandler');
 const courseController = require('./courseController');
 const authController = require('./authController');
 const userController = require('./userController');
+const reviewController = require('./reviewController');
 
 module.exports = {
     unImplementedController,
@@ -13,6 +14,7 @@ module.exports = {
     courseController,
     authController,
     userController,
+    reviewController,
     errorController: {
         undefinedRoutesHandler,
         globalErrorHandler,

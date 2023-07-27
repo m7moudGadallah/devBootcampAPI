@@ -1,14 +1,22 @@
 const router = require('express').Router();
 const { bootcampController, authController } = require('../controllers');
 const courseRouter = require('./courseRoutes');
+const reviewRouter = require('./reviewRoutes');
 
 // Nested route middelware to re-route
 /**
- * @route GET /api/v1/bootcamps/:bootcampId/courses
+ * @route /api/v1/bootcamps/:bootcampId/courses
  * @desc access bootcamp courses
  * @access public
  */
 router.use('/:bootcampId/courses', courseRouter);
+
+/**
+ * @route /api/v1/bootcamps/:bootcampId/reviews
+ * @desc access bootcamp reviews
+ * @access public
+ */
+router.use('/:bootcampId/reviews', reviewRouter);
 
 /**
  * @access public
