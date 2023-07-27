@@ -37,20 +37,14 @@ class CRUDFactory {
      */
     getAll(
         options = {
-            sortByFields,
-            selectedFields,
-            page,
-            limit,
-            populates,
+            sortByFields: '',
+            selectedFields: '',
+            page: 1,
+            limit: 100,
+            populates: [],
         }
     ) {
-        const {
-            sortByFields = '',
-            selectedFields = '',
-            page = 1,
-            limit = 100,
-            populates = [],
-        } = options;
+        const { sortByFields, selectedFields, page, limit, populates } = options;
 
         return catchAsync(async (req, res, next) => {
             // Create a separate count query without pagination
@@ -89,8 +83,8 @@ class CRUDFactory {
      * @param {Array} [options.populates=[]] - The array of fields to populate in the document.
      * @returns {Function} - The async middleware function for retrieving the document.
      */
-    getOne(options = { populates }) {
-        const { populates = [] } = options;
+    getOne(options = { populates: [] }) {
+        const { populates } = options;
 
         return catchAsync(async (req, res, next) => {
             const query = this.model.findById(req.params.id);
