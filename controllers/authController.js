@@ -278,9 +278,23 @@ const updateDetails = catchAsync(async (req, res, next) => {
     sendSuccessResponse({ response: res }).JSON({ data: user });
 });
 
+/**
+ * @route Get /api/v1/auth/logout
+ * @desc Log user out by clear cookie
+ * @access private
+ */
+const logout = catchAsync(async (req, res, next) => {
+    const token = 'none';
+
+    sendSuccessResponse({ response: res })
+        .attachTokenCookie(token, true)
+        .JSON({});
+});
+
 module.exports = {
     register,
     login,
+    logout,
     protect,
     authorize,
     getMe,

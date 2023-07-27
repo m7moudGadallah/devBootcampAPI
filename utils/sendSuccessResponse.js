@@ -16,7 +16,7 @@
  * const responseSender = sendSuccessResponse(options);
  *
  * // Attach token cookie (optional):
- * responseSender.attachTokenCookie('your-token-goes-here');
+ * responseSender.attachTokenCookie('your-token-goes-here', expiresNow= false);
  *
  * // Send JSON response:
  * responseSender.JSON({
@@ -38,6 +38,7 @@ const sendSuccessResponse = function (options = { response, statusCode }) {
          *
          * @function attachTokenCookie
          * @param {string} token - The JWT token to be attached as a cookie.
+         * @param {boolean} expiresNow - it's false by default so set it to true, if you use this token to logout
          * @returns {Object} - The updated `sendSuccessResponse` object with the `attachTokenCookie` method.
          *
          * @example
@@ -47,13 +48,17 @@ const sendSuccessResponse = function (options = { response, statusCode }) {
          *     statusCode: 200,
          * };
          */
-        attachTokenCookie(token) {
+        attachTokenCookie(token, expiresNow = false) {
             // cookie options
+            console.log(token);
             const { JWT_COOKIE_EXPIRES_IN: expiresIn, NODE_ENV: MODE } =
                 process.env;
 
             const options = {
-                expires: new Date(Date.now() + expiresIn * 24 * 60 * 60 * 1000),
+                expires: new Date(
+                    Date.now() +
+                        (expiresNow ? 0 : expiresIn * 24 * 60 * 60 * 1000)
+                ),
                 httpOnly: true,
             };
 
