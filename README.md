@@ -1,5 +1,13 @@
 # DevCamper Backend API Specifications
 
+<div align="center" width=100%>
+    &emsp;
+    <img src="./dev-data/pic/api.png" alt="api" width=10%/></a>
+    <img src="./dev-data/pic/nodejs.png" alt="nodejs" width=10%/></a>
+    <img src="./dev-data/pic/mongodb.png" alt="mongodb" width=10%/></a>
+</div>
+<br>
+
 Create the backend for a bootcamp directory website. The frontend/UI will be created by another team (future course). The html/css template has been created and can be used as a reference for functionality. All of the functionality below needs to be fully implmented in this project.
 
 ## Content
