@@ -1,173 +1,102 @@
-# DevCamper Backend API Specifications
+# Dev Bootcamps API
 
 <div align="center" width=100%>
     &emsp;
-    <img src="./dev-data/pic/api.png" alt="api" width=10%/></a>
-    <img src="./dev-data/pic/nodejs.png" alt="nodejs" width=10%/></a>
-    <img src="./dev-data/pic/mongodb.png" alt="mongodb" width=10%/></a>
+    <img src="./dev-data/pic/api.png" alt="api" width=10%" />
+    <img src="./dev-data/pic/nodejs.png" alt="nodejs" width=10%" />
+    <img src="./dev-data/pic/mongodb.png" alt="mongodb" width=10%" />
 </div>
 <br>
-
-Create the backend for a bootcamp directory website. The frontend/UI will be created by another team (future course). The html/css template has been created and can be used as a reference for functionality. All of the functionality below needs to be fully implmented in this project.
 
 ## Content
 
 <!-- TOC -->
 
--   [DevCamper Backend API Specifications](#devcamper-backend-api-specifications)
-    -   [Content](#content)
-        -   [Bootcamps](#bootcamps)
-        -   [Courses](#courses)
-        -   [Reviews](#reviews)
-        -   [Users & Authentication](#users--authentication)
-    -   [Security](#security)
-    -   [Documentation](#documentation)
-    -   [Deployment Digital Ocean](#deployment-digital-ocean)
-    -   [Code Related Suggestions](#code-related-suggestions)
-    -   [License](#license)
+- [Dev Bootcamps API](#dev-bootcamps-api)
+    - [Content](#content)
+    - [Description](#description)
+    - [Project Specification](#project-specification)
+    - [Installation](#installation)
+    - [Usage](#usage)
+        - [Development Mode](#development-mode)
+        - [Production Mode](#production-mode)
+    - [Version](#version)
+    - [License](#license)
+    - [How to Use the API](#how-to-use-the-api)
+    - [Technologies Used](#technologies-used)
+    - [Acknowledgments](#acknowledgments)
 
 <!-- /TOC -->
 
-### Bootcamps
+## Description
 
--   List all bootcamps in the database
-    -   Pagination
-    -   Select specific fields in result
-    -   Limit number of results
-    -   Filter by fields
--   Search bootcamps by radius from zipcode
-    -   Use a geocoder to get exact location and coords from a single address field
--   Get single bootcamp
--   Create new bootcamp
-    -   Authenticated users only
-    -   Must have the role "publisher" or "admin"
-    -   Only one bootcamp per publisher (admins can create more)
-    -   Field validation via Mongoose
--   Upload a photo for bootcamp
-    -   Owner only
-    -   Photo will be uploaded to local filesystem
--   Update bootcamps
-    -   Owner only
-    -   Validation on update
--   Delete Bootcamp
-    -   Owner only
--   Calculate the average cost of all courses for a bootcamp
--   Calculate the average rating from the reviews for a bootcamp
+This is the backend for a bootcamp directory website that provides information about available bootcamps, their courses, publishers, and reviews.
 
 **_[⬆️top](#content)_**
 
-### Courses
+## Project Specification
 
--   List all courses for bootcamp
--   List all courses in general
-    -   Pagination, filtering, etc
--   Get single course
--   Create new course
-    -   Authenticated users only
-    -   Must have the role "publisher" or "admin"
-    -   Only the owner or an admin can create a course for a bootcamp
-    -   Publishers can create multiple courses
--   Update course
-    -   Owner only
--   Delete course
-    -   Owner only
+For detailed information about the project's specifications, please refer to [projectSpecifications.md](./docs/documentation/projectSpecifications.md).
 
-**_[⬆️top](#content)_**
+## Installation
 
-### Reviews
+1. Rename the file `config/config.env.env` to `config/config.env` and set the appropriate values to configure the application based on your requirements.
 
--   List all reviews for a bootcamp
--   List all reviews in general
-    -   Pagination, filtering, etc
--   Get a single review
--   Create a review
-    -   Authenticated users only
-    -   Must have the role "user" or "admin" (no publishers)
--   Update review
-    -   Owner only
--   Delete review
-    -   Owner only
+2. Install the dependencies by running the following command:
 
-**_[⬆️top](#content)_**
+```
+npm install
+```
 
-### Users & Authentication
+## Usage
 
--   Authentication will be ton using JWT/cookies
-    -   JWT and cookie should expire in 30 days
--   User registration
-    -   Register as a "user" or "publisher"
-    -   Once registered, a token will be sent along with a cookie (token = xxx)
-    -   Passwords must be hashed
--   User login
-    -   User can login with email and password
-    -   Plain text password will compare with stored hashed password
-    -   Once logged in, a token will be sent along with a cookie (token = xxx)
--   User logout
-    -   Cookie will be sent to set token = none
--   Get user
-    -   Route to get the currently logged in user (via token)
--   Password reset (lost password)
-    -   User can request to reset password
-    -   A hashed token will be emailed to the users registered email address
-    -   A put request can be made to the generated url to reset password
-    -   The token will expire after 10 minutes
--   Update user info
-    -   Authenticated user only
-    -   Separate route to update password
--   User CRUD
-    -   Admin only
--   Users can only be made admin by updating the database field manually
+### Development Mode
+
+To run the application in development mode, use the following command:
+
+```
+npm run start:dev
+```
+
+### Production Mode
+
+To run the application in production mode, use the following command:
+
+```
+npm run start:prod
+```
 
 **_[⬆️top](#content)_**
 
-## Security
+## Version
 
--   Encrypt passwords and reset tokens
--   Prevent cross site scripting - XSS
--   Prevent NoSQL injections
--   Add a rate limit for requests of 100 requests per 10 minutes
--   Protect against http param polution
--   Add headers for security (helmet)
--   Use cors to make API public (for now)
-
-**_[⬆️top](#content)_**
-
-## Documentation
-
--   Use Postman to create documentation
--   Use docgen to create HTML files from Postman
--   Add html files as the / route for the api
-
-**_[⬆️top](#content)_**
-
-## Deployment (Digital Ocean)
-
--   Push to Github
--   Create a droplet - https://m.do.co/c/5424d440c63a
--   Clone repo on to server
--   Use PM2 process manager
--   Enable firewall (ufw) and open needed ports
--   Create an NGINX reverse proxy for port 80
--   Connect a domain name
--   Install an SSL using Let's Encrypt
-
-**_[⬆️top](#content)_**
-
-## Code Related Suggestions
-
--   NPM scripts for dev and production env
--   Config file for important constants
--   Use controller methods with documented descriptions/routes
--   Error handling middleware
--   Authentication middleware for protecting routes and setting user roles
--   Validation using Mongoose and no external libraries
--   Use async/await (create middleware to clean up controller methods)
--   Create a database seeder to import and destroy data
-
-**_[⬆️top](#content)_**
+Current version: v1.0.0
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+**_[⬆️top](#content)_**
+
+## How to Use the API
+
+Please refer to the [API documentation](https://m7moudgadallah.github.io/devBootcampAPI/) for information on how to interact with the API and the available endpoints.
+
+## Technologies Used
+
+-   API: Node.js with Express
+-   Database: MongoDB
+-   Additional Tools:
+    -   [Mailtrap](https://mailtrap.io/): An email testing service that allows developers to inspect and debug emails sent from their applications during development.
+    -   [Geocoder](https://www.npmjs.com/package/node-geocoder): A Node.js library for geocoding and reverse geocoding addresses using various geocoding providers.
+        -   [MapQuest Geocoding API](https://developer.mapquest.com/documentation/geocoding-api/): The MapQuest Geocoding API is used to convert addresses into geographic coordinates (latitude and longitude) and vice versa.
+
+**_[⬆️top](#content)_**
+
+## Acknowledgments
+
+This project is based on the teachings and materials from the Node.js API Masterclass With Express & MongoDB course on Udemy. Special thanks to the instructor and creators of the course for providing valuable insights into building robust APIs using Node.js, Express, and MongoDB.
+
+Course Link: [Node.js API Masterclass With Express & MongoDB](https://www.udemy.com/course/nodejs-api-masterclass/)
 
 **_[⬆️top](#content)_**
