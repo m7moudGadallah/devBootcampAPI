@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const crypto = require('crypto');
 const { User } = require('../models');
 const {
     catchAsync,
@@ -121,15 +122,17 @@ const login = catchAsync(async (req, res, next) => {
     }
 
     // validate that there is a user with this email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
 
-    if (!user) {
+    let isCorrect = null;
+
+    if (user) {
         // check if password is correct
-        const isCorrect = await user.matchPassword(password);
+        isCorrect = await user.matchPassword(password);
+    }
 
-        if (!isCorrect) {
-            return next(new AppError('Incorrect email or password', 401));
-        }
+    if (!user || !isCorrect) {
+        return next(new AppError('Incorrect email or password', 401));
     }
 
     // create and send token
@@ -183,6 +186,7 @@ const forgetPassword = catchAsync(async (req, res, next) => {
             subject: 'Your password reset token (valid for 10 min)',
             message,
         });
+        // console.log({ resetToken });
 
         // send response that email is sent
         sendSuccessResponse({ response: res }).JSON({
@@ -205,6 +209,43 @@ const forgetPassword = catchAsync(async (req, res, next) => {
 });
 
 /**
+ * @route POST /api/v1/auth/resetPassword
+ * @desc Reset Password
+ * @access public
+ */
+const resetPassword = catchAsync(async (req, res, next) => {
+    // Get & Hash reset token
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.resetToken)
+        .digest('hex');
+
+    // Get user based on passwordResetToken
+    const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { $gt: Date.now() },
+    }).select('+password');
+
+    // Check if user exist or token is valid
+    if (!user) {
+        return next(new AppError('Token is invalid or has expired', 400));
+    }
+
+    // Update Password
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // Send Success Response
+    const token = user.getSignedJwtToken();
+    sendSuccessResponse({ response: res })
+        .attachTokenCookie(token)
+        .JSON({ token });
+});
+
+/**
  * @route GET /api/v1/auth/me
  * @desc GET logged in user data
  * @access public
@@ -220,4 +261,5 @@ module.exports = {
     authorize,
     getMe,
     forgetPassword,
+    resetPassword,
 };
