@@ -17,7 +17,8 @@ class CRUDFactory {
      * @param {Object} options - Additional options for the CRUDFactory.
      * @param {string} [options.docName='doc'] - The name of the documents managed by the model.
      */
-    constructor(model, { docName = 'doc' }) {
+    constructor(model, options = { docName }) {
+        const { docName = 'doc' } = options;
         this.model = model;
         this.docName = docName;
     }
@@ -34,13 +35,23 @@ class CRUDFactory {
      * @param {Array} [options.populates=[]] - The array of fields to populate in the document.
      * @returns {Function} - The async middleware function for retrieving the documents.
      */
-    getAll({
-        sortByFields = '',
-        selectedFields = '',
-        page = 1,
-        limit = 100,
-        populates = [],
-    }) {
+    getAll(
+        options = {
+            sortByFields,
+            selectedFields,
+            page,
+            limit,
+            populates,
+        }
+    ) {
+        const {
+            sortByFields = '',
+            selectedFields = '',
+            page = 1,
+            limit = 100,
+            populates = [],
+        } = options;
+
         return catchAsync(async (req, res, next) => {
             // Create a separate count query without pagination
             const countDocs = async () => {
@@ -78,7 +89,9 @@ class CRUDFactory {
      * @param {Array} [options.populates=[]] - The array of fields to populate in the document.
      * @returns {Function} - The async middleware function for retrieving the document.
      */
-    getOne({ populates = [] }) {
+    getOne(options = { populates }) {
+        const { populates = [] } = options;
+
         return catchAsync(async (req, res, next) => {
             const query = this.model.findById(req.params.id);
 

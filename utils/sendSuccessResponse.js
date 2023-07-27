@@ -28,7 +28,8 @@
  *     count: 1,
  * });
  */
-const sendSuccessResponse = function ({ response, statusCode = 200 }) {
+const sendSuccessResponse = function (options = { response, statusCode }) {
+    const { response, statusCode = 200 } = options;
     response.status(statusCode);
 
     return {
@@ -80,7 +81,9 @@ const sendSuccessResponse = function ({ response, statusCode = 200 }) {
             };
             JSON(options);
         */
-        JSON({ token, pagination, data, count }) {
+        JSON(options = { token, pagination, data, count }) {
+            const { token, pagination, data, count } = options;
+
             response.status(statusCode).json({
                 success: true,
                 token,
