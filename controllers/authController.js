@@ -248,10 +248,34 @@ const resetPassword = catchAsync(async (req, res, next) => {
 /**
  * @route GET /api/v1/auth/me
  * @desc GET logged in user data
- * @access public
+ * @access private
  */
 const getMe = catchAsync(async (req, res, next) => {
     sendSuccessResponse({ response: res }).JSON({ data: req.user });
+});
+
+/**
+ * @route PATCH /api/v1/auth/updateDetails
+ * @desc UPDATE logged in user data (name, email)
+ * @access private
+ */
+const updateDetails = catchAsync(async (req, res, next) => {
+    // set field needed to updates
+    const fieldsToUpdate = {
+        name: req.body.name,
+        email: req.body.email,
+    };
+
+    // update user
+    const user = await User.findByIdAndUpdate(req.user._id, fieldsToUpdate, {
+        new: true,
+        runValidators: true,
+    });
+
+    user.__v = undefined;
+
+    // send success response
+    sendSuccessResponse({ response: res }).JSON({ data: user });
 });
 
 module.exports = {
@@ -262,4 +286,5 @@ module.exports = {
     getMe,
     forgetPassword,
     resetPassword,
+    updateDetails,
 };
