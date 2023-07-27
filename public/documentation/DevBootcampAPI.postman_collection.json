@@ -1,0 +1,1179 @@
+{
+	"info": {
+		"_postman_id": "4262d698-24b3-4471-9811-b92898dab25f",
+		"name": "DevBootcampAPI",
+		"description": "Backend API for the DevCamper application to manage bootcamps, courses, reviews, users and authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27682136"
+	},
+	"item": [
+		{
+			"name": "Bootcamps",
+			"item": [
+				{
+					"name": "Get ALL Bootcamps",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps?page=1&limit=2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps"
+							],
+							"query": [
+								{
+									"key": "location.state",
+									"value": "MA",
+									"description": "Filter bootcamps by the state they are located in",
+									"disabled": true
+								},
+								{
+									"key": "housing",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "avgerageCost[lte]",
+									"value": "1000",
+									"disabled": true
+								},
+								{
+									"key": "careers[in]",
+									"value": "Business,UI/UX",
+									"description": " Filter bootcamps by the careers they offer. You can specify multiple careers separated by commas.",
+									"disabled": true
+								},
+								{
+									"key": "careers[nin]",
+									"value": "Mobile Development",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "avgerageCost,-averageRatings",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "page number"
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"description": "number of items per page"
+								},
+								{
+									"key": "select",
+									"value": "name,careers,courses",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Fetch all bootcamps from database. Inlcudes pagination, filtering, etc..."
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Bootcamp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d725a1b7b292f5f8ceff788"
+								}
+							]
+						},
+						"description": "Fetch single bootcamp by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bootcamp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n\t\t\"_id\": \"5d725a1b7b292f5f8ceff788\",\r\n\t\t\"user\": \"5c8a1d5b0190b214360dc032\",\r\n\t\t\"name\": \"Devcentral Bootcamp\",\r\n\t\t\"description\": \"Is coding your passion? Codemasters will give you the skills and the tools to become the best developer possible. We specialize in front end and full stack web development\",\r\n\t\t\"website\": \"https://devcentral.com\",\r\n\t\t\"phone\": \"(444) 444-4444\",\r\n\t\t\"email\": \"enroll@devcentral.com\",\r\n\t\t\"address\": \"45 Upper College Rd Kingston RI 02881\",\r\n\t\t\"careers\": [\r\n\t\t\t\"Mobile Development\",\r\n\t\t\t\"Web Development\",\r\n\t\t\t\"Data Science\",\r\n\t\t\t\"Business\"\r\n\t\t],\r\n\t\t\"housing\": false,\r\n\t\t\"jobAssistance\": true,\r\n\t\t\"jobGuarantee\": true,\r\n\t\t\"acceptGi\": true\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps"
+							]
+						},
+						"description": "Create new bootcamp to database. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Bootcamp",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"housing\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d713a66ec8f2b88b8f830b8",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "Update a bootcamp in database by ID. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload bootcamp photo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/E:/Pictures/for computer science/983826.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:id/photo",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":id",
+								"photo"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d725a1b7b292f5f8ceff788",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "Upload a bootcamp photo in database by ID. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Bootcamp",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d725a1b7b292f5f8ceff788",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "Delete a bootcamp from database by ID. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bootcamps within Radius",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/radius/:zipcode/:distance/:unit",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								"radius",
+								":zipcode",
+								":distance",
+								":unit"
+							],
+							"variable": [
+								{
+									"key": "zipcode",
+									"value": "02118",
+									"description": "The zipcode of the location from which to search for nearby bootcamps."
+								},
+								{
+									"key": "distance",
+									"value": "100",
+									"description": "The distance in the specified unit (e.g., miles or kilometers) that defines the radius within which to search for bootcamps."
+								},
+								{
+									"key": "unit",
+									"value": "mi",
+									"description": "The unit of measurement for the distance, either \"mi\" for miles or \"km\" for kilometers."
+								}
+							]
+						},
+						"description": "StartFragment\n\nThis endpoint is used to retrieve bootcamps within a specified radius of a given location (zipcode) in a particular unit of measurement. It employs the Haversine formula to calculate the distance between the specified location and the bootcamps in the database, ensuring accurate results.\n\nEndFragment"
+					},
+					"response": []
+				}
+			],
+			"description": "Bootcamps CRUD Operations"
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Get ALL Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/courses?page=3&limit=3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "3",
+									"description": "page number"
+								},
+								{
+									"key": "limit",
+									"value": "3",
+									"description": "number of items per page"
+								}
+							]
+						},
+						"description": "Fetch all courses from database. Inlcudes pagination, filtering, etc..."
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/courses/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d725a4a7b292f5f8ceff789"
+								}
+							]
+						},
+						"description": "Fetch single course by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Courses of specific Bootcamp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:bootcampId/courses?select=title,bootcamp",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":bootcampId",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "select",
+									"value": "title,bootcamp"
+								}
+							],
+							"variable": [
+								{
+									"key": "bootcampId",
+									"value": "5d725a1b7b292f5f8ceff788",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "fetch all courses of specific bootcamp by bootcampId"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n\t\t\"_id\": \"5d725cfec4ded7bcb480eaa5\",\r\n\t\t\"title\": \"Web Development\",\r\n\t\t\"description\": \"This course will teach you how to build high quality web applications with technologies like React, Node.js, PHP & Laravel\",\r\n\t\t\"weeks\": 8,\r\n\t\t\"tuition\": 8000,\r\n\t\t\"minimumSkill\": \"beginner\",\r\n\t\t\"scholarhipsAvailable\": false,\r\n\t\t\"bootcamp\": \"5d725a1b7b292f5f8ceff788\",\r\n\t\t\"user\": \"5c8a1d5b0190b214360dc032\"\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/courses",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses"
+							]
+						},
+						"description": "Create new course to database. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Course",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"scholarhipsAvailable\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/courses/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d725cfec4ded7bcb480eaa5",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "Update a course in database by ID. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/courses/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"courses",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d725cfec4ded7bcb480eaa5",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "Delete a Course from database by ID. Must be authenticated and must be publisher or admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bootcamp Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\t{\r\n\t\t\"_id\": \"5d725cfec4ded7bcb480eaa5\",\r\n\t\t\"title\": \"Web Development\",\r\n\t\t\"description\": \"This course will teach you how to build high quality web applications with technologies like React, Node.js, PHP & Laravel\",\r\n\t\t\"weeks\": 8,\r\n\t\t\"tuition\": 8000,\r\n\t\t\"minimumSkill\": \"beginner\",\r\n\t\t\"scholarhipsAvailable\": false,\r\n\t\t\"user\": \"5c8a1d5b0190b214360dc032\"\r\n\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:bootcampId/courses",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":bootcampId",
+								"courses"
+							],
+							"variable": [
+								{
+									"key": "bootcampId",
+									"value": "5d725a1b7b292f5f8ceff788"
+								}
+							]
+						},
+						"description": "Create a course for a specific bootcamp"
+					},
+					"response": []
+				}
+			],
+			"description": "Courses CRUD Operations"
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"password\": \"{{password}}\",\r\n    \"passwordConfirm\": \"{{password}}\",\r\n    \"role\": \"publisher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Add user to database with encrypted password"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"barry@gmail.com\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Add user to database with encrypted password"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logged in user via token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/me",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"me"
+							]
+						},
+						"description": "StartFragment\n\nGET logged in user data\n\nEndFragmen"
+					},
+					"response": []
+				},
+				{
+					"name": "Forget Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/forgetPassword",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgetPassword"
+							]
+						},
+						"description": "Generate password token and send email"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"passwordConfirm\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/resetPassword/:resetToken",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"resetPassword",
+								":resetToken"
+							],
+							"variable": [
+								{
+									"key": "resetToken",
+									"value": "0a06900986edaabc4d35fad269a3ec77b1f71729dd493634ba1d013d0ca55398",
+									"description": "reset password token"
+								}
+							]
+						},
+						"description": "reset user password via token"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user Details",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/updateDetails",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"updateDetails"
+							]
+						},
+						"description": "Update logged in user name and email"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/logout",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Log user out by setting clear cookie"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for user authentication includes register, login, reset password, etc"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users?page=2&limit=5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"description": "page number"
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"description": "number of users per page"
+								}
+							]
+						},
+						"description": "Fetch all users from database. Inlcudes pagination, filtering, etc..., Must be authenticated and must be admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Get single User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d7a514b5d2c12c7449be043",
+									"description": "user id"
+								}
+							]
+						},
+						"description": "Fetch single user by ID. Must be authenticated and must be admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"user example\",\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"123456\",\r\n    \"passwordConfirm\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						},
+						"description": "Create new user in datebase. Must be authenticated and must be admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role\": \"publisher\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "64c21325532bf51564b2ea0b",
+									"description": "user id"
+								}
+							]
+						},
+						"description": "Update a user in database by ID. StartFragment\n\nMust be authenticated and must be admin.\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "64c21325532bf51564b2ea0b",
+									"description": "user id"
+								}
+							]
+						},
+						"description": "Delete a User from database by ID. Must be authenticated and must be admin.\n\nEndFragment"
+					},
+					"response": []
+				}
+			],
+			"description": "CRUD functionality for users only available to admin"
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create a new Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Not worth the money\",\r\n  \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra feugiat mauris id viverra. Duis luctus ex sed facilisis ultrices. Curabitur scelerisque bibendum ligula, quis condimentum libero fermentum in. Aenean erat erat, aliquam in purus a, rhoncus hendrerit tellus. Donec accumsan justo in felis consequat sollicitudin. Fusce luctus mattis nunc vitae maximus. Curabitur semper felis eu magna laoreet scelerisque\",\r\n  \"rating\": 4.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:bootcampId/reviews",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":bootcampId",
+								"reviews"
+							],
+							"variable": [
+								{
+									"key": "bootcampId",
+									"value": "5d725a037b292f5f8ceff787"
+								}
+							]
+						},
+						"description": "Insert review for a specific bootcamp."
+					},
+					"response": []
+				},
+				{
+					"name": "update Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 4.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d7a514b5d2c12c7449be025",
+									"description": "review id"
+								}
+							]
+						},
+						"description": "update user Review. Must be Authenticated and only user can update his/her review."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5d7a514b5d2c12c7449be025",
+									"description": "review id"
+								}
+							]
+						},
+						"description": "Delete user Review. Must be Authenticated and only user can delete his/her review and also admin can do this action."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews of specific bootcamp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/bootcamps/:bootcampId/reviews?page=1&limit=3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"bootcamps",
+								":bootcampId",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							],
+							"variable": [
+								{
+									"key": "bootcampId",
+									"value": "5d713995b721c3bb38c1f5d0",
+									"description": "bootcamp id"
+								}
+							]
+						},
+						"description": "Get all reviews for a specific bootcamp by passing bootcamp id."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/reviews?page=1&limit=3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						},
+						"description": "Get all reviews from database and populate with bootcamp name and description"
+					},
+					"response": []
+				}
+			],
+			"description": "Manage Course reviews"
+		}
+	]
+}
