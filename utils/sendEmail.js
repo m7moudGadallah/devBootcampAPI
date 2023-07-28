@@ -13,8 +13,6 @@ const {
 const transporter = nodemailer.createTransport({
     host: HOST,
     port: PORT,
-    secure: false,
-    ignoreTLS: true,
     auth: {
         user: USERNAME,
         pass: PASSWORD,

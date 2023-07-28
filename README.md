@@ -12,19 +12,19 @@
 
 <!-- TOC -->
 
--   [Dev Bootcamps API](#dev-bootcamps-api)
-    -   [Content](#content)
-    -   [Description](#description)
-    -   [Project Specification](#project-specification)
-    -   [Installation](#installation)
-    -   [Usage](#usage)
-        -   [Development Mode](#development-mode)
-        -   [Production Mode](#production-mode)
-    -   [Version](#version)
-    -   [License](#license)
-    -   [How to Use the API](#how-to-use-the-api)
-    -   [Technologies Used](#technologies-used)
-    -   [Acknowledgments](#acknowledgments)
+- [Dev Bootcamps API](#dev-bootcamps-api)
+    - [Content](#content)
+    - [Description](#description)
+    - [Project Specification](#project-specification)
+    - [Installation](#installation)
+    - [Usage](#usage)
+        - [Development Mode](#development-mode)
+        - [Production Mode](#production-mode)
+    - [Version](#version)
+    - [License](#license)
+    - [How to Use the API](#how-to-use-the-api)
+    - [Technologies Used](#technologies-used)
+    - [Acknowledgments](#acknowledgments)
 
 <!-- /TOC -->
 

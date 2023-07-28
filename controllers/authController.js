@@ -180,7 +180,6 @@ const forgetPassword = catchAsync(async (req, res, next) => {
         const message = `Your are receiving this email because you (or someone else) asked to reset password.\nSubmit your new password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email`;
 
         // call sendEmail
-        //BUG: Socket Error because port is refused from firewall
         await sendEmail({
             email: user.email,
             subject: 'Your password reset token (valid for 10 min)',
