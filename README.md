@@ -2,9 +2,9 @@
 
 <div align="center" width=100%>
     &emsp;
-    <img src="./dev-data/pic/api.png" alt="api" width=10%" />
-    <img src="./dev-data/pic/nodejs.png" alt="nodejs" width=10%" />
-    <img src="./dev-data/pic/mongodb.png" alt="mongodb" width=10%" />
+    <img src="./src/dev-data/pic/api.png" alt="api" width=10%" />
+    <img src="./src/dev-data/pic/nodejs.png" alt="nodejs" width=10%" />
+    <img src="./src/dev-data/pic/mongodb.png" alt="mongodb" width=10%" />
 </div>
 <br>
 
