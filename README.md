@@ -2,9 +2,9 @@
 
 <div align="center" width=100%>
     &emsp;
-    <img src="./dev-data/pic/api.png" alt="api" width=10%" />
-    <img src="./dev-data/pic/nodejs.png" alt="nodejs" width=10%" />
-    <img src="./dev-data/pic/mongodb.png" alt="mongodb" width=10%" />
+    <img src="./src/dev-data/pic/api.png" alt="api" width=10%" />
+    <img src="./src/dev-data/pic/nodejs.png" alt="nodejs" width=10%" />
+    <img src="./src/dev-data/pic/mongodb.png" alt="mongodb" width=10%" />
 </div>
 <br>
 
@@ -32,7 +32,7 @@
 
 This is the backend for a bootcamp directory website that provides information about available bootcamps, their courses, publishers, and reviews.
 
-**_[⬆️top](#content)_**
+**_[&uarr;top](#content)_**
 
 ## Project Specification
 
@@ -44,7 +44,7 @@ For detailed information about the project's specifications, please refer to [pr
 
 2. Install the dependencies by running the following command:
 
-```
+```js
 npm install
 ```
 
@@ -54,7 +54,7 @@ npm install
 
 To run the application in development mode, use the following command:
 
-```
+```js
 npm run start:dev
 ```
 
@@ -62,11 +62,11 @@ npm run start:dev
 
 To run the application in production mode, use the following command:
 
-```
+```js
 npm run start:prod
 ```
 
-**_[⬆️top](#content)_**
+**_[&uarr;top](#content)_**
 
 ## Version
 
@@ -76,7 +76,7 @@ Current version: v1.0.0
 
 This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE) file for details.
 
-**_[⬆️top](#content)_**
+**_[&uarr;top](#content)_**
 
 ## How to Use the API
 
@@ -91,7 +91,7 @@ Please refer to the [API documentation](https://m7moudgadallah.github.io/devBoot
     -   [Geocoder](https://www.npmjs.com/package/node-geocoder): A Node.js library for geocoding and reverse geocoding addresses using various geocoding providers.
         -   [MapQuest Geocoding API](https://developer.mapquest.com/documentation/geocoding-api/): The MapQuest Geocoding API is used to convert addresses into geographic coordinates (latitude and longitude) and vice versa.
 
-**_[⬆️top](#content)_**
+**_[&uarr;top](#content)_**
 
 ## Acknowledgments
 
@@ -99,6 +99,6 @@ This project is based on the teachings and materials from the Node.js API Master
 
 Course Link: [Node.js API Masterclass With Express & MongoDB](https://www.udemy.com/course/nodejs-api-masterclass/)
 
-**_[⬆️top](#content)_**
+**_[&uarr;top](#content)_**
 
 > Note: Please note that this project may have been customized or extended beyond the original course content to meet specific requirements or add additional features.

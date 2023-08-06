@@ -1,9 +1,9 @@
 require('colors'); // colorize logs
 const dotenv = require('dotenv');
-const { configENV, db } = require('./config');
+const { configENV, db } = require('./src/config');
 
 dotenv.config({ path: configENV }); // load env vars
-const app = require('./app');
+const app = require('./src/app');
 
 // env vars
 const {
