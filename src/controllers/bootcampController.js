@@ -32,7 +32,12 @@ const checkOwnerShip = catchAsync(async (req, res, next) => {
     const bootcamp = await Bootcamp.findById(req.params.id);
 
     // check if the user owns this bootcamp
-    if (!(req.user.role === 'admin' || bootcamp.user.toString() === req.body.user.toString())) {
+    if (
+        !(
+            req.user.role === 'admin' ||
+            bootcamp.user.toString() === req.body.user.toString()
+        )
+    ) {
         return next(
             new AppError(
                 `you are not authorized to modify or delete this bootcamp`,
