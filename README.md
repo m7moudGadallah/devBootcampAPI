@@ -101,4 +101,4 @@ Course Link: [Node.js API Masterclass With Express & MongoDB](https://www.udemy.
 
 **_[&uarr;top](#content)_**
 
-> Note: Please note that this project may have been customized or extended beyond the original course content to meet specific requirements or add additional features.
+> 💡 Note: Please note that this project may have been customized or extended beyond the original course content to meet specific requirements or add additional features.
